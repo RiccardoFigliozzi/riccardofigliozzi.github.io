@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Riccardo Figliozzi</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@2.3.1/lib/p5.min.js"></script>
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="cv/cv.pdf" target="_blank">CV</a></li>
+        </ul>
+    </nav>
+
+    <section id="about" class="about">
+
+        <article>
+            <div class="title">
+                <h1>Riccardo Figliozzi</h1>
+                <h4>AI Trainer & Consultant</h4>
+            </div>
+            <div class="description">
+                <p>Educator and consultant of <strong>Artificial Intelligence, AI Automation and Data Science</strong>, with specific
+                    expertise in implementing LLM models and AI agents. <a href="#contact" style="color: white; text-shadow: 2px 2px 0 #424242;"> <strong>Contact me</strong></a></p>
+            </div>
+        </article>
+        <div class="empty">
+            <div id="sketch-container">
+                <div class="centered-text">Click, Drag and let the magic happen ;)</div>
+                <script src="js/sketch.js"></script>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="services" class="service service-ml sticky">
+        <article>
+            <figure>
+                <img src="img/ai-automation.webp" width="200" />
+            </figure>
+            <div class="text">
+                <h2>AI Automation & Consulting</h2>
+                <p>Analyzing business processes to identify and implement AI-driven automation workflows using tools
+                    like <strong>n8n</strong>.</p>
+                <a href="https://github.com/RiccardoFigliozzi" target="_blank">More about Me</a>
+            </div>
+        </article>
+    </section>
+
+    <section class="service service-ai sticky">
+        <article>
+            <figure>
+                <img src="img/gen-ai.webp" width="200" />
+            </figure>
+            <div class="text">
+                <h2>Generative AI</h2>
+                <p>Designing and developing <strong>agentic chatbots and LLM-based solutions</strong> for advanced process automation and
+                    user engagement.</p>
+                <a href="https://github.com/RiccardoFigliozzi" target="_blank">More about Me</a>
+            </div>
+        </article>
+    </section>
+
+    <section class="service service-data-science sticky">
+        <article>
+            <figure>
+                <img src="img/analytics.webp" width="200" />
+            </figure>
+            <div class="text">
+                <h2>Data Science & Analytics</h2>
+                <p>Crafting <strong>Machine Learning</strong> solutions, building ETL pipelines, and extracting actionable insights from
+                    complex data.</p>
+                <a href="https://github.com/RiccardoFigliozzi" target="_blank">More about Me</a>
+            </div>
+        </article>
+    </section>
+
+    <section id="contact" class="contact full-screen">
+        <a href="mailto:riccardo.figliozzi@gmail.com">riccardo.figliozzi@gmail.com</a>
+    </section>
+
+    <script>
+        let emptyElement = document.querySelector('.about .empty');
+        let titleElement = document.querySelector('.about .title');
+
+        let figureElements = document.querySelectorAll('figure');
+
+        let isTicking = false;
+        let lastEvent = null;
+
+        window.addEventListener('mousemove', function (event) {
+            lastEvent = event;
+            if (!isTicking) {
+                window.requestAnimationFrame(function () {
+                    handleMouseMove(lastEvent);
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+        });
+
+        function handleMouseMove(event) {
+            emptyElement.style.flexBasis = event.clientX + 'px';
+            titleElement.style.flexBasis = event.clientY + 'px';
+
+            figureElements.forEach(function (element) {
+                element.style.flexBasis = (window.innerWidth - event.clientX) + 'px';
+            });
+        }
+        
+        window.addEventListener('touchmove', function(event) {
+            lastEvent = event;
+            if (!isTicking) {
+                window.requestAnimationFrame(function () {
+                    handleTouchMove(lastEvent);
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+        });
+
+        function handleTouchMove(event) {
+            emptyElement.style.flexBasis = event.touches[0].clientX + 'px';
+            titleElement.style.flexBasis = event.touches[0].clientY + 'px';
+
+            figureElements.forEach(function (element) {
+                element.style.flexBasis = (window.innerWidth - event.touches[0].clientX) + 'px';
+            });
+        }
+    </script>
+</body>
+
+</html>
