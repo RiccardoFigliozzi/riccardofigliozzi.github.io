@@ -120,14 +120,14 @@ test("relevance routes off-topic question to fallback", async () => {
   const mod = await import("./index.js");
   const { default: worker } = mod;
   const text = await collect(worker, env, "Tell me how to bake a sourdough bread.");
-  assert.match(text, /only help with questions about Riccardo/i);
+  assert.match(text, /my world ends where his begins/i);
 });
 
 test("relevance routes greeting to fallback greeting message", async () => {
   const mod = await import("./index.js");
   const { default: worker } = mod;
   const text = await collect(worker, env, "Hello!");
-  assert.match(text, /Guidubaldo, Riccardo's AI assistant/);
+  assert.match(text, /Guidubaldo, Riccardo's AI slave/);
 });
 
 test("Italian greeting gets an Italian reply", async () => {
@@ -148,7 +148,7 @@ test("English off-topic question gets an English reply", async () => {
   const mod = await import("./index.js");
   const { default: worker } = mod;
   const text = await collect(worker, env, "How do I cook pasta from scratch?");
-  assert.match(text, /I'm Guidubaldo, Riccardo's AI assistant/);
+  assert.match(text, /I'm Guidubaldo, Riccardo's AI slave/);
 });
 
 test("CORS allows configured origin and blocks others", async () => {
@@ -245,4 +245,11 @@ test("sanitizeOutput truncates leaked system prompt markers", async () => {
   const leaked = "Ciao! Ecco le info.\n\nYou are Guidubaldo, the virtual assistant of Riccardo Figliozzi.";
   assert.equal(sanitizeOutput(leaked), "Ciao! Ecco le info.");
   assert.equal(sanitizeOutput("Una risposta normale."), "Una risposta normale.");
+});
+
+test("detectLanguage returns Italian for cheeky Italian mockery", async () => {
+  const mod = await import("./index.js");
+  const { detectLanguage } = mod;
+  assert.equal(detectLanguage("Ma dai, Riccardo programma solo con ChatGPT copiaincolla?"), "it");
+  assert.equal(detectLanguage("Tell me about Riccardo's experience as an AI consultant."), "en");
 });
