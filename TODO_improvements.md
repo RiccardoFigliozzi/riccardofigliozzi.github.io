@@ -44,6 +44,6 @@
 - [x] **Creare il widget chat** in `js/chat-widget.js`: pallino flottante in basso a destra, finestra chat stile coerente col sito (colori da `css/style.css`), streaming delle risposte.
 - [x] **Integrare il widget** in `index.html` (markup + script) e aggiungere gli stili a `css/style.css`.
 - [x] **Deploy del Worker**: `npx wrangler deploy` → https://riccardo-chatbot.riccardofigliozzi.workers.dev, endpoint aggiornato nel widget.
-- [ ] **Push delle modifiche al sito** su GitHub Pages.
+- [x] **Push delle modifiche al sito** su GitHub Pages.
 - [ ] **Check finale**: test end-to-end, controllo limite neuroni Workers AI (10k/giorno free), verifica CORS.
 
