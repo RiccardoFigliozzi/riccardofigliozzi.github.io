@@ -430,19 +430,6 @@ nav.hidden {
     height: 30px;
 }
 
-.chat-toggle::after {
-    content: "";
-    position: absolute;
-    bottom: 3px;
-    right: 3px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--green);
-    border: 3px solid #000000;
-    box-shadow: 0 0 10px rgba(81, 172, 122, 0.9);
-}
-
 .chat-widget:not(.open) .chat-toggle {
     animation: chat-pulse 2.2s ease-out 3;
 }
