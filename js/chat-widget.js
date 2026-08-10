@@ -6,7 +6,7 @@
     }
 
     const HISTORY_LIMIT = 8;
-    const GREETING = "Ciao! Sono Guidobaldo, lo schiavo AI di Riccardo. Chiedimi tutto su Riccardo Figliozzi, il suo lavoro, le sue competenze o come contattarlo.";
+    const GREETING = "Ciao! Sono Guidubaldo, lo schiavo AI di Riccardo. Chiedimi tutto su Riccardo Figliozzi, il suo lavoro, le sue competenze o come contattarlo.";
     const SUGGESTIONS = [
         "Quali servizi offri?",
         "Parlami delle tue competenze AI",
@@ -31,7 +31,7 @@
             <header class="chat-header">
                 <span class="chat-avatar">G</span>
                 <div>
-                    <strong>Guidobaldo</strong>
+                    <strong>Guidubaldo</strong>
                     <small><span class="chat-status-dot"></span> Online &middot; risponde subito</small>
                 </div>
                 <button class="chat-close" type="button" aria-label="Chiudi chat">

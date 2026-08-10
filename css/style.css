@@ -93,6 +93,9 @@ nav {
     z-index: 10;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 nav ul {
@@ -102,6 +105,28 @@ nav ul {
     height: 100%;
     margin: 0;
     padding: 0;
+    justify-content: flex-end;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    margin-left: 45px;
+}
+
+.nav-logo img {
+    height: 60px;
+    width: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .nav-logo {
+        margin-left: 25px;
+    }
+
+    .nav-logo img {
+        height: 44px;
+    }
 }
 
 nav ul li {

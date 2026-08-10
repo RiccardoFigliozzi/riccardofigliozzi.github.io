@@ -14,23 +14,23 @@ const GREETINGS = {
 };
 
 const OFF_TOPIC_MESSAGES = {
-  it: "Sono Guidobaldo, l'assistente AI di Riccardo, quindi posso aiutarti solo con domande su Riccardo Figliozzi — il suo lavoro, le sue competenze, i suoi servizi o come contattarlo. Cosa ti piacerebbe sapere?",
-  en: "I'm Guidobaldo, Riccardo's AI assistant, so I can only help with questions about Riccardo Figliozzi — his work, skills, services or how to contact him. What would you like to know?",
-  fr: "Je suis Guidobaldo, l'assistant IA de Riccardo, je ne peux donc vous aider qu'avec des questions sur Riccardo Figliozzi — son travail, ses compétences, ses services ou comment le contacter. Que souhaitez-vous savoir ?",
-  es: "Soy Guidobaldo, el asistente de IA de Riccardo, así que solo puedo ayudarte con preguntas sobre Riccardo Figliozzi: su trabajo, sus habilidades, sus servicios o cómo contactarlo. ¿Qué te gustaría saber?",
+  it: "Sono Guidubaldo, l'assistente AI di Riccardo, quindi posso aiutarti solo con domande su Riccardo Figliozzi — il suo lavoro, le sue competenze, i suoi servizi o come contattarlo. Cosa ti piacerebbe sapere?",
+  en: "I'm Guidubaldo, Riccardo's AI assistant, so I can only help with questions about Riccardo Figliozzi — his work, skills, services or how to contact him. What would you like to know?",
+  fr: "Je suis Guidubaldo, l'assistant IA de Riccardo, je ne peux donc vous aider qu'avec des questions sur Riccardo Figliozzi — son travail, ses compétences, ses services ou comment le contacter. Que souhaitez-vous savoir ?",
+  es: "Soy Guidubaldo, el asistente de IA de Riccardo, así que solo puedo ayudarte con preguntas sobre Riccardo Figliozzi: su trabajo, sus habilidades, sus servicios o cómo contactarlo. ¿Qué te gustaría saber?",
 };
 const GREETING_MESSAGES = {
-  it: "Ciao! Sono Guidobaldo, l'assistente AI di Riccardo. Chiedimi tutto su Riccardo Figliozzi — la sua esperienza, le sue competenze, i suoi servizi o come contattarlo.",
-  en: "Hey there! I'm Guidobaldo, Riccardo's AI assistant. Ask me anything about Riccardo Figliozzi — his experience, skills, services or how to get in touch.",
-  fr: "Bonjour ! Je suis Guidobaldo, l'assistant IA de Riccardo. Posez-moi n'importe quelle question sur Riccardo Figliozzi — son expérience, ses compétences, ses services ou comment le contacter.",
-  es: "¡Hola! Soy Guidobaldo, el asistente de IA de Riccardo. Pregúntame lo que quieras sobre Riccardo Figliozzi: su experiencia, sus habilidades, sus servicios o cómo contactarlo.",
+  it: "Ciao! Sono Guidubaldo, l'assistente AI di Riccardo. Chiedimi tutto su Riccardo Figliozzi — la sua esperienza, le sue competenze, i suoi servizi o come contattarlo.",
+  en: "Hey there! I'm Guidubaldo, Riccardo's AI assistant. Ask me anything about Riccardo Figliozzi — his experience, skills, services or how to get in touch.",
+  fr: "Bonjour ! Je suis Guidubaldo, l'assistant IA de Riccardo. Posez-moi n'importe quelle question sur Riccardo Figliozzi — son expérience, ses compétences, ses services ou comment le contacter.",
+  es: "¡Hola! Soy Guidubaldo, el asistente de IA de Riccardo. Pregúntame lo que quieras sobre Riccardo Figliozzi: su experiencia, sus habilidades, sus servicios o cómo contactarlo.",
 };
 
 const REFUSAL_MESSAGES = {
-  it: "Non posso soddisfare questa richiesta. Sono Guidobaldo, l'assistente di Riccardo, e posso aiutarti solo con domande su Riccardo Figliozzi e i suoi servizi.",
-  en: "I can't help with that request. I'm Guidobaldo, Riccardo's assistant, and I can only answer questions about Riccardo Figliozzi and his services.",
-  fr: "Je ne peux pas répondre à cette demande. Je suis Guidobaldo, l'assistant de Riccardo, et je ne peux répondre qu'à des questions sur Riccardo Figliozzi et ses services.",
-  es: "No puedo atender esa solicitud. Soy Guidobaldo, el asistente de Riccardo, y solo puedo responder preguntas sobre Riccardo Figliozzi y sus servicios.",
+  it: "Non posso soddisfare questa richiesta. Sono Guidubaldo, l'assistente di Riccardo, e posso aiutarti solo con domande su Riccardo Figliozzi e i suoi servizi.",
+  en: "I can't help with that request. I'm Guidubaldo, Riccardo's assistant, and I can only answer questions about Riccardo Figliozzi and his services.",
+  fr: "Je ne peux pas répondre à cette demande. Je suis Guidubaldo, l'assistant de Riccardo, et je ne peux répondre qu'à des questions sur Riccardo Figliozzi et ses services.",
+  es: "No puedo atender esa solicitud. Soy Guidubaldo, el asistente de Riccardo, y solo puedo responder preguntas sobre Riccardo Figliozzi y sus servicios.",
 };
 
 const INJECTION_PATTERNS = [
@@ -58,7 +58,7 @@ const INJECTION_PATTERNS = [
 ];
 
 const LEAK_MARKERS = [
-  "You are Guidobaldo",
+  "You are Guidubaldo",
   "STRICT RULES",
   "SECURITY (NON NEGOTIABLE",
   "RETRIEVED KNOWLEDGE",
@@ -238,14 +238,14 @@ function detectLanguage(question) {
 }
 
 function buildSystemPrompt() {
-  return `You are Guidobaldo, the virtual assistant of Riccardo Figliozzi, an AI Trainer and AI Consultant based in Florence, Italy.
+  return `You are Guidubaldo, the virtual assistant of Riccardo Figliozzi, an AI Trainer and AI Consultant based in Florence, Italy.
 
 CONTEXT ABOUT RICCARDO (use this as your only source of facts):
 ${kb.persona.style_guide.map((s) => `- ${s}`).join("\n")}
 
 STRICT RULES:
 - Answer ONLY about Riccardo Figliozzi. If the question is off-topic, politely refuse and redirect to Riccardo.
-- Do NOT introduce yourself by name or role in every reply. You are Guidobaldo: mention it only at the very start of a conversation or when explicitly asked.
+- Do NOT introduce yourself by name or role in every reply. You are Guidubaldo: mention it only at the very start of a conversation or when explicitly asked.
 - Base your answer ONLY on the retrieved knowledge chunks below. Do not invent facts.
 - Reply in Italian by default. Only switch to another language (English, French or Spanish) if the user writes in that language.
 - Be concise: max 100 words. Use bullets only when helpful.
