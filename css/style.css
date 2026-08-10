@@ -95,23 +95,21 @@ nav {
     backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 nav ul {
     display: flex;
     align-items: center;
-    width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
-    justify-content: flex-end;
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
     margin-left: 45px;
+    margin-right: 20px;
 }
 
 .nav-logo img {
@@ -122,6 +120,7 @@ nav ul {
 @media only screen and (max-width: 768px) {
     .nav-logo {
         margin-left: 25px;
+        margin-right: 12px;
     }
 
     .nav-logo img {
