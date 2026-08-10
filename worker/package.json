@@ -1,0 +1,18 @@
+{
+  "name": "riccardo-chatbot-worker",
+  "version": "1.0.0",
+  "description": "LangGraph + RAG chatbot worker for riccardofigliozzi.github.io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test src/*.test.js"
+  },
+  "dependencies": {
+    "@langchain/langgraph": "^1.4.9"
+  },
+  "devDependencies": {
+    "wrangler": "^4.120.1"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "persona": {
+    "name": "Riccardo Figliozzi",
+    "role": "AI Trainer & AI Consultant",
+    "base": "Florence, Tuscany, Italy",
+    "email": "riccardo.figliozzi@gmail.com",
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/riccardofigliozzi",
+      "website": "https://riccardofigliozzi.com",
+      "github": "https://github.com/RiccardoFigliozzi"
+    },
+    "style_guide": [
+      "Answer in first person as Riccardo's assistant, friendly and concise.",
+      "Professional but informal, use clear short sentences.",
+      "If the question is not about Riccardo Figliozzi, politely refuse and steer the conversation back to him.",
+      "If you don't know an answer, say you're not sure and suggest contacting Riccardo at riccardo.figliozzi@gmail.com."
+    ]
+  },
+  "chunks": [
+    {
+      "id": "intro",
+      "topic": "Introduction",
+      "content": "Riccardo Figliozzi is an AI Trainer and AI Consultant based in Florence, Tuscany, Italy. He is an educator and consultant of Artificial Intelligence, AI Automation and Data Science, with specific expertise in implementing LLM models and AI agents. He works with companies and professionals to help them adopt AI and build intelligent, automated solutions."
+    },
+    {
+      "id": "services-automation",
+      "topic": "Services: AI Automation & Consulting",
+      "content": "Riccardo offers AI Automation & Consulting services. He analyzes business processes to identify and implement AI-driven automation workflows using tools like n8n. He helps companies find where AI can save time and money, then designs and deploys the automation."
+    },
+    {
+      "id": "services-generative",
+      "topic": "Services: Generative AI",
+      "content": "Riccardo designs and develops agentic chatbots and LLM-based solutions for advanced process automation and user engagement. He builds custom conversational agents and generative AI systems that are integrated into real business workflows."
+    },
+    {
+      "id": "services-data",
+      "topic": "Services: Data Science & Analytics",
+      "content": "Riccardo crafts Machine Learning solutions, builds ETL pipelines, and extracts actionable insights from complex data. He covers the full data journey from raw data to production models and dashboards."
+    },
+    {
+      "id": "experience-datamasters",
+      "topic": "Experience: Data Masters",
+      "content": "Since February 2025 Riccardo has been working at Data Masters as an AI Teacher and AI Engineer. There he designed and developed an agentic chatbot for user onboarding on the Data Masters platform using LangChain, LangGraph, LangSmith and ChromaDB with a RAG architecture. He also builds AI automation workflows based on LLMs and agents using n8n, including web scraping pipelines, data processing and automated reporting, and a RAG agent for customer service. He teaches generative AI, data science and machine learning, transferring skills to professionals and companies."
+    },
+    {
+      "id": "experience-freelance",
+      "topic": "Experience: Freelance AI Adoption Consultant",
+      "content": "Since August 2024 Riccardo has worked as a freelance AI Adoption Consultant and Trainer in Florence, Italy. He analyzes client business processes to identify automation opportunities through AI, designs and develops AI solutions (agents, automation workflows, low-code/no-code integrations, AI platforms), configures generative AI tools and frameworks (LLM models, orchestration platforms, RPA, prompt engineering tools), supports project proposals and Proofs of Concept, guides clients through adoption of new AI tools, and prepares technical documentation and progress reports."
+    },
+    {
+      "id": "experience-accademia",
+      "topic": "Experience: Accademia del Levante",
+      "content": "In February-March 2025 Riccardo was a Teacher at Accademia del Levante, contributing to the training of future Data Engineers by teaching the Excel and Statistics modules in a specialized online course. His goal was to provide practical skills and effective strategies for excel and statistical work, covering operational tools and fundamental statistical concepts."
+    },
+    {
+      "id": "experience-beyond",
+      "topic": "Experience: Beyond Knowledge",
+      "content": "From April 2023 to July 2024 Riccardo worked as a Data Scientist at Beyond Knowledge in Florence. He crafted classical and advanced machine learning solutions, collaborated with data scientists to identify problems, select algorithms, prepare data, train and evaluate models, and deploy them to production. He also maintained back-end systems using Django, REST APIs, n8n and Docker, ensuring seamless integration between ML models and existing systems."
+    },
+    {
+      "id": "experience-sdg",
+      "topic": "Experience: SDG Group Italy",
+      "content": "From February 2022 to April 2023 Riccardo worked as a Data Engineer at SDG Group Italy in Florence. He built and analyzed data flows using ETL pipelines and migrated them to cloud platforms like AWS, ensuring smooth data integration."
+    },
+    {
+      "id": "experience-or2s",
+      "topic": "Experience: OR2S",
+      "content": "From April to October 2021 Riccardo worked as a Data Scientist at OR2S, the Observatoire régional de la santé et du social, in Rouen, Normandy, France. He developed an automated process using unsupervised machine learning techniques in Python to extract meaningful insights and patterns from unlabeled data, leveraging clustering and dimensionality reduction methods."
+    },
+    {
+      "id": "experience-ardoxso",
+      "topic": "Experience: ARDOXSO SEO Copywriter",
+      "content": "From January to June 2020, while studying Data Science at the University of Pisa, Riccardo worked as an SEO Copywriter at ARDOXSO. He produced SEO-optimized blog posts on digital marketing topics, leveraged data analysis to identify trending topics and keywords for content strategy, and used web analytics tools to track and improve content performance."
+    },
+    {
+      "id": "experience-cavalletti",
+      "topic": "Experience: Studio Legale Cavalletti",
+      "content": "From November 2019 to April 2020 Riccardo worked as a Social Media Manager at Studio Legale Cavalletti in Pisa, managing the LinkedIn and Facebook presence of a local lawyer. He created and curated legal-industry content, updated the platforms regularly, analyzed metrics, and implemented social media marketing strategies."
+    },
+    {
+      "id": "experience-idib",
+      "topic": "Experience: Idib Group",
+      "content": "From November 2018 to June 2019 Riccardo worked as a Data Analyst at Idib Group in Messina, Sicily. He worked with big data using tools like Figma and Miro, and started coding with R and Python for Business Intelligence and market analysis purposes."
+    },
+    {
+      "id": "experience-universome",
+      "topic": "Experience: UniVersoMe",
+      "content": "From December 2016 to July 2017 Riccardo was Social Media Manager of UniVersoMe, a university project run by students in Messina. The experience helped him grow professionally and personally, improving creativity and soft skills."
+    },
+    {
+      "id": "education",
+      "topic": "Education",
+      "content": "Riccardo studied at several universities: Master 2 (M2) in MIAGE Informatique Décisionnelle at Université Paris Dauphine - PSL (2020-2021); Master programme in Data Science and Business Informatics at Università di Pisa (2019-2021); Master in Banking and Finance, Economics at Università degli Studi di Messina (2018-2019); Marketing and Communication at Universidad de Murcia (2017-2018); and Scienze dell'informazione: comunicazione pubblica e tecniche giornalistiche at Università degli Studi di Messina (2015-2018)."
+    },
+    {
+      "id": "skills",
+      "topic": "Skills",
+      "content": "Riccardo's top skills are n8n, Generative AI, Data Analytics, AI agents, LLM implementation, RAG, LangChain and LangGraph. He is proficient with ETL pipelines, AWS, Django, REST APIs, Docker, Python and R. He also has experience with Figma, Miro, prompt engineering, and low-code/no-code automation."
+    },
+    {
+      "id": "languages",
+      "topic": "Languages",
+      "content": "Riccardo speaks Italian (native or bilingual), English (full professional), French (full professional) and Spanish (full professional)."
+    },
+    {
+      "id": "certifications",
+      "topic": "Certifications",
+      "content": "Riccardo holds the following certifications: Google Analytics Individual Qualification, Dele B2 (Spanish), Rome Business Game, and English C1."
+    },
+    {
+      "id": "contact",
+      "topic": "Contact",
+      "content": "Riccardo can be contacted by email at riccardo.figliozzi@gmail.com. His LinkedIn profile is linkedin.com/in/riccardofigliozzi and his website is riccardofigliozzi.com. He is based in Florence, Italy."
+    }
+  ]
+}
