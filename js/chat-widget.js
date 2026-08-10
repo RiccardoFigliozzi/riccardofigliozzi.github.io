@@ -6,12 +6,20 @@
     }
 
     const HISTORY_LIMIT = 8;
+    const GREETING = "Ciao! Sono Guidobaldo, lo schiavo AI di Riccardo. Chiedimi tutto su Riccardo Figliozzi, il suo lavoro, le sue competenze o come contattarlo.";
+    const SUGGESTIONS = [
+        "Quali servizi offri?",
+        "Parlami delle tue competenze AI",
+        "Come posso contattarti?",
+    ];
+
     let history = [];
+    let started = false;
 
     const root = document.createElement("div");
     root.className = "chat-widget";
     root.innerHTML = `
-        <button class="chat-toggle" type="button" aria-label="Open chat">
+        <button class="chat-toggle" type="button" aria-label="Apri chat">
             <svg class="chat-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
             </svg>
@@ -21,16 +29,22 @@
         </button>
         <div class="chat-window" hidden>
             <header class="chat-header">
-                <span class="chat-avatar">R</span>
+                <span class="chat-avatar">G</span>
                 <div>
-                    <strong>Riccardo's AI assistant</strong>
-                    <small>Ask me anything about Riccardo</small>
+                    <strong>Guidobaldo</strong>
+                    <small><span class="chat-status-dot"></span> Online &middot; risponde subito</small>
                 </div>
+                <button class="chat-close" type="button" aria-label="Chiudi chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
             </header>
             <div class="chat-messages" role="log" aria-live="polite"></div>
+            <div class="chat-suggestions" hidden></div>
             <form class="chat-form">
-                <input type="text" class="chat-input" placeholder="Type a message..." autocomplete="off" />
-                <button type="submit" class="chat-send" aria-label="Send message">
+                <input type="text" class="chat-input" placeholder="Chiedimi qualcosa..." autocomplete="off" />
+                <button type="submit" class="chat-send" aria-label="Invia messaggio">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
                     </svg>
@@ -44,21 +58,53 @@
     const toggle = root.querySelector(".chat-toggle");
     const windowEl = root.querySelector(".chat-window");
     const messagesEl = root.querySelector(".chat-messages");
+    const suggestionsEl = root.querySelector(".chat-suggestions");
+    const closeBtn = root.querySelector(".chat-close");
     const form = root.querySelector(".chat-form");
     const input = root.querySelector(".chat-input");
+    const sendBtn = form.querySelector(".chat-send");
 
     let isStreaming = false;
 
-    toggle.addEventListener("click", () => {
-        const open = windowEl.hidden;
-        windowEl.hidden = !open;
-        root.classList.toggle("open", open);
-        if (open) {
-            input.focus();
-            if (!messagesEl.querySelector(".chat-msg")) {
-                addMessage("bot", "Hi! I'm Riccardo's AI assistant. Ask me anything about Riccardo Figliozzi, his work, skills or how to contact him.");
-            }
+    SUGGESTIONS.forEach((text) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chat-chip";
+        chip.textContent = text;
+        chip.addEventListener("click", () => {
+            input.value = text;
+            form.dispatchEvent(new Event("submit", { cancelable: true }));
+        });
+        suggestionsEl.appendChild(chip);
+    });
+
+    function open() {
+        windowEl.hidden = false;
+        root.classList.add("open");
+        toggle.setAttribute("aria-label", "Chiudi chat");
+        if (!started) {
+            addMessage("bot", GREETING);
+            suggestionsEl.hidden = false;
+            started = true;
         }
+        input.focus();
+    }
+
+    function close() {
+        windowEl.hidden = true;
+        root.classList.remove("open");
+        toggle.setAttribute("aria-label", "Apri chat");
+    }
+
+    toggle.addEventListener("click", () => {
+        if (windowEl.hidden) open();
+        else close();
+    });
+
+    closeBtn.addEventListener("click", close);
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !windowEl.hidden) close();
     });
 
     form.addEventListener("submit", (event) => {
@@ -66,16 +112,34 @@
         const text = input.value.trim();
         if (!text || isStreaming) return;
         input.value = "";
+        suggestionsEl.hidden = true;
         send(text);
     });
+
+    function scrollToBottom() {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
 
     function addMessage(role, text) {
         const el = document.createElement("div");
         el.className = `chat-msg chat-msg-${role}`;
-        el.innerHTML = `<span class="chat-bubble">${escapeHtml(text)}</span>`;
+        if (role === "bot") {
+            el.innerHTML = `<span class="chat-msg-avatar">G</span><span class="chat-bubble">${escapeHtml(text)}</span>`;
+        } else {
+            el.innerHTML = `<span class="chat-bubble">${escapeHtml(text)}</span>`;
+        }
         messagesEl.appendChild(el);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
+        scrollToBottom();
         return el.querySelector(".chat-bubble");
+    }
+
+    function addTyping() {
+        const el = document.createElement("div");
+        el.className = "chat-msg chat-msg-bot";
+        el.innerHTML = `<span class="chat-msg-avatar">G</span><span class="chat-bubble chat-typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>`;
+        messagesEl.appendChild(el);
+        scrollToBottom();
+        return el;
     }
 
     function escapeHtml(str) {
@@ -89,11 +153,12 @@
         history.push({ role: "user", content: text });
         if (history.length > HISTORY_LIMIT) history = history.slice(-HISTORY_LIMIT);
 
-        const bubble = addMessage("bot", "…");
+        const typing = addTyping();
         isStreaming = true;
-        form.querySelector(".chat-send").disabled = true;
+        sendBtn.disabled = true;
 
         let answer = "";
+        let bubble = null;
         try {
             const response = await fetch(ENDPOINT, {
                 method: "POST",
@@ -123,9 +188,13 @@
                         if (!line.startsWith("data: ")) continue;
                         const payload = JSON.parse(line.slice(6));
                         if (payload.token) {
+                            if (!bubble) {
+                                typing.remove();
+                                bubble = addMessage("bot", "");
+                            }
                             answer += payload.token;
                             bubble.innerHTML = escapeHtml(answer);
-                            messagesEl.scrollTop = messagesEl.scrollHeight;
+                            scrollToBottom();
                         }
                     }
                 }
@@ -133,13 +202,14 @@
 
             if (!answer) throw new Error("Empty response from server.");
         } catch (err) {
-            bubble.innerHTML = escapeHtml("Sorry, something went wrong. Please try again later.");
+            typing.remove();
+            addMessage("bot", "Ops, qualcosa è andato storto. Riprova più tardi.");
             console.error("Chat error:", err);
         } finally {
             history.push({ role: "assistant", content: answer || "" });
             if (history.length > HISTORY_LIMIT) history = history.slice(-HISTORY_LIMIT);
             isStreaming = false;
-            form.querySelector(".chat-send").disabled = false;
+            sendBtn.disabled = false;
             input.focus();
         }
     }
