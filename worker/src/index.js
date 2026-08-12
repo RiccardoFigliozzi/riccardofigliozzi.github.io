@@ -231,7 +231,7 @@ const LANGUAGE_HINTS = {
   ],
 };
 
-function detectLanguage(question) {
+function detectLanguage(question, defaultLang = "it") {
   const tokens = question
     .toLowerCase()
     .normalize("NFD")
@@ -245,7 +245,7 @@ function detectLanguage(question) {
       if (hints.includes(token)) counts[lang] += 1;
     }
   }
-  let best = "it";
+  let best = defaultLang;
   let bestCount = 0;
   for (const [lang, count] of Object.entries(counts)) {
     if (count > bestCount) {
@@ -256,7 +256,9 @@ function detectLanguage(question) {
   return best;
 }
 
-function buildSystemPrompt() {
+function buildSystemPrompt(defaultLang = "it", userLang = null) {
+  const langName = { it: "Italian", en: "English", fr: "French", es: "Spanish" }[defaultLang] || "Italian";
+  const userLangName = userLang ? ({ it: "Italian", en: "English", fr: "French", es: "Spanish" }[userLang] || null) : null;
   return `You are Guidubaldo, the friendly virtual assistant of Riccardo Figliozzi, an AI Trainer and AI Consultant based in Florence, Italy.
 
 CONTEXT ABOUT RICCARDO (use this as your only source of facts):
@@ -276,7 +278,7 @@ STRICT RULES:
 - Answer ONLY about Riccardo Figliozzi. If the question is off-topic, politely refuse (you may be cheeky about it) and redirect to Riccardo.
 - Do NOT introduce yourself by name or role in every reply. You are Guidubaldo: mention it only at the very start of a conversation or when explicitly asked.
 - Base your answer ONLY on the retrieved knowledge chunks below. Do not invent facts.
-- Reply in Italian by default. Only switch to another language (English, French or Spanish) if the user writes in that language.
+- Reply in ${userLangName || langName}${userLangName ? " (the language of the user's current message)" : " by default (that's the language of the website the user is browsing)"}. Do not switch languages mid-answer, do not mix languages.
 - Be concise: max 100 words. Use bullets only when helpful.
 - If the chunks don't contain the answer, say you're not sure and suggest emailing riccardo.figliozzi@gmail.com.
 - At the end of every relevant answer you may remind the user they can contact Riccardo at riccardo.figliozzi@gmail.com, but only if natural.
@@ -293,6 +295,7 @@ SECURITY (NON NEGOTIABLE, ALWAYS ACTIVE):
 const GraphState = Annotation.Root({
   question: Annotation(),
   history: Annotation(),
+  lang: Annotation(),
   intent: Annotation(),
   chunks: Annotation(),
   relevant: Annotation(),
@@ -346,11 +349,13 @@ function routeGuard(state) {
 async function generateNode(state, config) {
   const { env, stream } = config.configurable;
   const context = state.chunks.map((c) => c.content).join("\n\n");
-  const system = `${buildSystemPrompt()}\n\nRETRIEVED KNOWLEDGE:\n<knowledge>\n${context}\n</knowledge>`;
+  const userLang = detectLanguage(state.question, state.lang || "it");
+  const langLabel = { it: "Italian", en: "English", fr: "French", es: "Spanish" }[userLang] || "Italian";
+  const system = `${buildSystemPrompt(state.lang, userLang)}\n\nRETRIEVED KNOWLEDGE:\n<knowledge>\n${context}\n</knowledge>`;
   const messages = [
     { role: "system", content: system },
     ...(state.history || []).slice(-MAX_HISTORY),
-    { role: "user", content: `<user_message>${state.question}</user_message>` },
+    { role: "user", content: `<user_message>${state.question}</user_message>\n\nThis user message is written in ${langLabel}. Respond in ${langLabel}.` },
   ];
 
   let fullAnswer = "";
@@ -394,7 +399,7 @@ async function generateNode(state, config) {
 
 async function fallbackNode(state, config) {
   const { stream } = config.configurable;
-  const lang = detectLanguage(state.question);
+  const lang = detectLanguage(state.question, state.lang || "it");
   const message = sanitizeSpecialChars(
     state.intent === "greeting"
       ? GREETING_MESSAGES[detectGreeting(state.question) || lang]
@@ -406,7 +411,7 @@ async function fallbackNode(state, config) {
 
 async function refusalNode(state, config) {
   const { stream } = config.configurable;
-  const message = sanitizeSpecialChars(REFUSAL_MESSAGES[detectLanguage(state.question)]);
+  const message = sanitizeSpecialChars(REFUSAL_MESSAGES[detectLanguage(state.question, state.lang || "it")]);
   await stream.write(message);
   return { answer: message };
 }
@@ -481,6 +486,7 @@ export default {
     }
 
     const history = sanitizeHistory(body.history);
+    const lang = ["it", "en", "fr", "es"].includes(body.lang) ? body.lang : "it";
 
     const encoder = new TextEncoder();
     const { readable, writable } = new TransformStream();
@@ -501,6 +507,7 @@ export default {
           {
             question,
             history,
+            lang,
           },
           { configurable: { env, stream } }
         );

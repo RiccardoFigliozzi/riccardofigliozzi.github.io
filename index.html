@@ -26,9 +26,14 @@
             <img src="img/logo.png" alt="Logo Riccardo Figliozzi" />
         </a>
         <ul>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="cv/cv.pdf" target="_blank">CV</a></li>
+            <li><a href="#services" data-i18n="nav.services">Services</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            <li><a href="cv/cv.pdf" target="_blank" data-i18n="nav.cv">CV</a></li>
+            <li class="nav-lang">
+                <button type="button" class="lang-toggle" data-lang="it">IT</button>
+                <span>/</span>
+                <button type="button" class="lang-toggle" data-lang="en">EN</button>
+            </li>
         </ul>
     </nav>
 
@@ -37,16 +42,16 @@
         <article>
             <div class="title">
                 <h1>Riccardo Figliozzi</h1>
-                <h4>AI Trainer & Consultant</h4>
+                <h4 data-i18n="about.role">AI Trainer & Consultant</h4>
             </div>
             <div class="description">
-                <p>Educator and consultant of <strong>Artificial Intelligence, AI Automation and Data Science</strong>, with specific
+                <p data-i18n="about.description">Educator and consultant of <strong>Artificial Intelligence, AI Automation and Data Science</strong>, with specific
                     expertise in implementing LLM models and AI agents. <a href="#contact" style="color: white; text-shadow: 2px 2px 0 #424242;"> <strong>Contact me</strong></a></p>
             </div>
         </article>
         <div class="empty">
             <div id="sketch-container">
-                <div class="centered-text">Click, Drag and let the magic happen ;)</div>
+                <div class="centered-text" data-i18n="sketch.hint">Click, Drag and let the magic happen ;)</div>
                 <script src="js/sketch.js"></script>
             </div>
         </div>
@@ -59,10 +64,10 @@
                 <img src="img/ai-automation.webp" width="200" />
             </figure>
             <div class="text">
-                <h2>AI Automation & Consulting</h2>
-                <p>Analyzing business processes to identify and implement AI-driven automation workflows using tools
+                <h2 data-i18n="services.automation.title">AI Automation & Consulting</h2>
+                <p data-i18n="services.automation.body">Analyzing business processes to identify and implement AI-driven automation workflows using tools
                     like <strong>n8n</strong>.</p>
-                <a href="https://github.com/RiccardoFigliozzi" target="_blank">More about Me</a>
+                <a href="https://github.com/RiccardoFigliozzi" target="_blank" data-i18n="services.more">More about Me</a>
             </div>
         </article>
     </section>
@@ -73,10 +78,10 @@
                 <img src="img/gen-ai.webp" width="200" />
             </figure>
             <div class="text">
-                <h2>Generative AI</h2>
-                <p>Designing and developing <strong>agentic chatbots and LLM-based solutions</strong> for advanced process automation and
+                <h2 data-i18n="services.generative.title">Generative AI</h2>
+                <p data-i18n="services.generative.body">Designing and developing <strong>agentic chatbots and LLM-based solutions</strong> for advanced process automation and
                     user engagement.</p>
-                <a href="https://github.com/RiccardoFigliozzi" target="_blank">More about Me</a>
+                <a href="https://github.com/RiccardoFigliozzi" target="_blank" data-i18n="services.more">More about Me</a>
             </div>
         </article>
     </section>
@@ -87,10 +92,10 @@
                 <img src="img/analytics.webp" width="200" />
             </figure>
             <div class="text">
-                <h2>Data Science & Analytics</h2>
-                <p>Crafting <strong>Machine Learning</strong> solutions, building ETL pipelines, and extracting actionable insights from
+                <h2 data-i18n="services.data.title">Data Science & Analytics</h2>
+                <p data-i18n="services.data.body">Crafting <strong>Machine Learning</strong> solutions, building ETL pipelines, and extracting actionable insights from
                     complex data.</p>
-                <a href="https://github.com/RiccardoFigliozzi" target="_blank">More about Me</a>
+                <a href="https://github.com/RiccardoFigliozzi" target="_blank" data-i18n="services.more">More about Me</a>
             </div>
         </article>
     </section>
@@ -147,6 +152,16 @@
                 element.style.flexBasis = (window.innerWidth - event.touches[0].clientX) + 'px';
             });
         }
+    </script>
+    <script src="js/i18n.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.lang-toggle').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    window.RICCARDO_I18N.setLang(btn.getAttribute('data-lang'));
+                });
+            });
+        });
     </script>
     <script src="js/chat-widget.js"></script>
 </body>

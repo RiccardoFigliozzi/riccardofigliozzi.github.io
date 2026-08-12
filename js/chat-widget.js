@@ -7,11 +7,14 @@
 
     const HISTORY_LIMIT = 8;
     const MAX_INPUT_CHARS = 2000;
-    const GREETING = "Ciao a tutti! Sono Guidubaldo, l'assistente di Riccardo. Chiedimi tutto su Riccardo Figliozzi, il suo lavoro, le sue competenze o come contattarlo.";
-    const SUGGESTIONS = [
-        "Quali servizi offre Riccardo?",
-        "Quali sono le competenze AI di Riccardo?",
-        "Come posso contattare Riccardo?",
+    const i18n = window.RICCARDO_I18N || { t: (k) => k };
+    const lang = () => window.RICCARDO_CHAT_LANG || "it";
+
+    const GREETING = () => i18n.t("chat.greeting");
+    const SUGGESTIONS = () => [
+        i18n.t("chat.suggestion.1"),
+        i18n.t("chat.suggestion.2"),
+        i18n.t("chat.suggestion.3"),
     ];
 
     let history = [];
@@ -20,7 +23,7 @@
     const root = document.createElement("div");
     root.className = "chat-widget";
     root.innerHTML = `
-        <button class="chat-toggle" type="button" aria-label="Apri chat">
+        <button class="chat-toggle" type="button" aria-label="${i18n.t("chat.ariaOpen")}">
             <svg class="chat-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
             </svg>
@@ -33,9 +36,9 @@
                 <span class="chat-avatar">G</span>
                 <div>
                     <strong>Guidubaldo</strong>
-                    <small><span class="chat-status-dot"></span> Online &middot; risponde subito</small>
+                    <small><span class="chat-status-dot"></span> ${i18n.t("chat.status")}</small>
                 </div>
-                <button class="chat-close" type="button" aria-label="Chiudi chat">
+                <button class="chat-close" type="button" aria-label="${i18n.t("chat.ariaClose")}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
                         <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                     </svg>
@@ -44,8 +47,8 @@
             <div class="chat-messages" role="log" aria-live="polite"></div>
             <div class="chat-suggestions" hidden></div>
             <form class="chat-form">
-                <input type="text" class="chat-input" placeholder="Chiedimi qualcosa..." autocomplete="off" />
-                <button type="submit" class="chat-send" aria-label="Invia messaggio">
+                <input type="text" class="chat-input" placeholder="${i18n.t("chat.placeholder")}" autocomplete="off" />
+                <button type="submit" class="chat-send" aria-label="${i18n.t("chat.send")}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
                     </svg>
@@ -67,7 +70,7 @@
 
     let isStreaming = false;
 
-    SUGGESTIONS.forEach((text) => {
+    SUGGESTIONS().forEach((text) => {
         const chip = document.createElement("button");
         chip.type = "button";
         chip.className = "chat-chip";
@@ -82,9 +85,9 @@
     function open() {
         windowEl.hidden = false;
         root.classList.add("open");
-        toggle.setAttribute("aria-label", "Chiudi chat");
+        toggle.setAttribute("aria-label", i18n.t("chat.ariaClose"));
         if (!started) {
-            addMessage("bot", GREETING);
+            addMessage("bot", GREETING());
             suggestionsEl.hidden = false;
             started = true;
         }
@@ -94,7 +97,7 @@
     function close() {
         windowEl.hidden = true;
         root.classList.remove("open");
-        toggle.setAttribute("aria-label", "Apri chat");
+        toggle.setAttribute("aria-label", i18n.t("chat.ariaOpen"));
     }
 
     toggle.addEventListener("click", () => {
@@ -108,6 +111,30 @@
         if (event.key === "Escape" && !windowEl.hidden) close();
     });
 
+    document.addEventListener("riccardo:lang", (event) => {
+        const newLang = event.detail;
+        window.RICCARDO_CHAT_LANG = newLang;
+        input.placeholder = i18n.t("chat.placeholder");
+        const status = root.querySelector(".chat-header small");
+        if (status) status.innerHTML = `<span class="chat-status-dot"></span> ${i18n.t("chat.status")}`;
+        toggle.setAttribute("aria-label", windowEl.hidden ? i18n.t("chat.ariaOpen") : i18n.t("chat.ariaClose"));
+        closeBtn.setAttribute("aria-label", i18n.t("chat.ariaClose"));
+        sendBtn.setAttribute("aria-label", i18n.t("chat.send"));
+        if (!started) return;
+        suggestionsEl.innerHTML = "";
+        SUGGESTIONS().forEach((text) => {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = "chat-chip";
+            chip.textContent = text;
+            chip.addEventListener("click", () => {
+                input.value = text;
+                form.dispatchEvent(new Event("submit", { cancelable: true }));
+            });
+            suggestionsEl.appendChild(chip);
+        });
+    });
+
     form.addEventListener("submit", (event) => {
         event.preventDefault();
         const text = input.value.trim();
@@ -115,7 +142,7 @@
         if (text.length > MAX_INPUT_CHARS) {
             input.value = "";
             suggestionsEl.hidden = true;
-            addMessage("bot", "Il messaggio è troppo lungo: massimo " + MAX_INPUT_CHARS + " caratteri.");
+            addMessage("bot", i18n.t("chat.error.tooLong"));
             return;
         }
         input.value = "";
@@ -170,7 +197,7 @@
             const response = await fetch(ENDPOINT, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: text, history }),
+                body: JSON.stringify({ message: text, history, lang: lang() }),
             });
 
             if (!response.ok) {
@@ -211,10 +238,10 @@
         } catch (err) {
             typing.remove();
             const friendly = {
-                "Request limit reached": "Hai esaurito le 5 richieste disponibili. Ricarica la pagina o riprova più tardi.",
-                "Message too long": "Il messaggio è troppo lungo: massimo 2000 caratteri.",
+                "Request limit reached": i18n.t("chat.error.limit"),
+                "Message too long": i18n.t("chat.error.tooLong"),
             }[err.message];
-            addMessage("bot", friendly || "Ops, qualcosa è andato storto. Riprova più tardi.");
+            addMessage("bot", friendly || i18n.t("chat.error.generic"));
             console.error("Chat error:", err);
         } finally {
             history.push({ role: "assistant", content: answer || "" });

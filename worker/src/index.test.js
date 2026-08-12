@@ -77,12 +77,12 @@ const env = {
   },
 };
 
-async function collect(worker, envVars, message) {
+async function collect(worker, envVars, message, lang) {
   const response = await worker.fetch(
     new Request("https://worker/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json", Origin: "https://riccardofigliozzi.github.io" },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify(lang ? { message, lang } : { message }),
     }),
     envVars
   );
@@ -153,6 +153,21 @@ test("English off-topic question gets an English reply", async () => {
   const mod = await import("./index.js");
   const { default: worker } = mod;
   const text = await collect(worker, env, "How do I cook pasta from scratch?");
+  assert.match(text, /I can tell you all about Riccardo Figliozzi/);
+});
+
+test("detectLanguage uses page language as default when question has no strong hints", async () => {
+  const mod = await import("./index.js");
+  const { detectLanguage } = mod;
+  assert.equal(detectLanguage("123 456 789", "en"), "en");
+  assert.equal(detectLanguage("Zugzwang wunderbar", "it"), "it");
+  assert.equal(detectLanguage("Che servizi offri?", "en"), "it");
+});
+
+test("off-topic question in an unsupported language follows the English page language", async () => {
+  const mod = await import("./index.js");
+  const { default: worker } = mod;
+  const text = await collect(worker, env, "pasta", "en");
   assert.match(text, /I can tell you all about Riccardo Figliozzi/);
 });
 
