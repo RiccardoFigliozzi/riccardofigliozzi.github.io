@@ -46,4 +46,3 @@
 - [x] **Deploy del Worker**: `npx wrangler deploy` → https://riccardo-chatbot.riccardofigliozzi.workers.dev, endpoint aggiornato nel widget.
 - [x] **Push delle modifiche al sito** su GitHub Pages.
 - [ ] **Check finale**: test end-to-end, controllo limite neuroni Workers AI (10k/giorno free), verifica CORS.
-

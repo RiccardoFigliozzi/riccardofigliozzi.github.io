@@ -1,7 +1,7 @@
 import { StateGraph, Annotation, START, END } from "@langchain/langgraph";
 import kb from "./kb.json" with { type: "json" };
 
-const EMBEDDING_MODEL = "@cf/baai/bge-small-en-v1.5";
+const EMBEDDING_MODEL = "@cf/baai/bge-m3";
 const LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct-fp8";
 const TOP_K = 4;
 const RELEVANCE_THRESHOLD = 0.28;
@@ -14,23 +14,23 @@ const GREETINGS = {
 };
 
 const OFF_TOPIC_MESSAGES = {
-  it: "Sono Guidubaldo, lo schiavo AI di Riccardo, e il mio mondo finisce dove comincia il suo: lavoro, competenze, servizi o come contattarlo. Per tutto il resto, il signor Google ti aspetta. Cosa ti piacerebbe sapere?",
-  en: "I'm Guidubaldo, Riccardo's AI slave, and my world ends where his begins: work, skills, services or how to contact him. For anything else, Google is your friend. What would you like to know?",
-  fr: "Je suis Guidubaldo, l'esclave IA de Riccardo, et mon monde s'arrête là où commence le sien : travail, compétences, services ou comment le contacter. Pour le reste, Google est ton ami. Que souhaitez-vous savoir ?",
-  es: "Soy Guidubaldo, el esclavo de IA de Riccardo, y mi mundo termina donde empieza el suyo: trabajo, habilidades, servicios o cómo contactarlo. Para lo demás, Google es tu amigo. ¿Qué te gustaría saber?",
+  it: "Eh, guarda, io ti posso raccontare tutto di Riccardo Figliozzi: lavoro, competenze, servizi, come contattarlo. Per il resto, diciamo che è meglio chiedere al signor Google. Cosa ti piacerebbe sapere su Riccardo?",
+  en: "Well, look, I can tell you all about Riccardo Figliozzi: his work, skills, services, how to contact him. For anything else, Google is your friend. What would you like to know about Riccardo?",
+  fr: "Eh, regarde, je peux tout te raconter sur Riccardo Figliozzi : travail, compétences, services, comment le contacter. Pour le reste, Google est ton ami. Que souhaites-tu savoir sur Riccardo ?",
+  es: "Eh, mira, te puedo contar todo sobre Riccardo Figliozzi: trabajo, habilidades, servicios, cómo contactarlo. Para lo demás, Google es tu amigo. ¿Qué te gustaría saber sobre Riccardo?",
 };
 const GREETING_MESSAGES = {
-  it: "Ciao! Sono Guidubaldo, lo schiavo AI di Riccardo. Chiedimi tutto su Riccardo Figliozzi — la sua esperienza, le sue competenze, i suoi servizi o come contattarlo.",
-  en: "Hey there! I'm Guidubaldo, Riccardo's AI slave. Ask me anything about Riccardo Figliozzi — his experience, skills, services or how to get in touch.",
-  fr: "Bonjour ! Je suis Guidubaldo, l'esclave IA de Riccardo. Posez-moi n'importe quelle question sur Riccardo Figliozzi — son expérience, ses compétences, ses services ou comment le contacter.",
-  es: "¡Hola! Soy Guidubaldo, el esclavo de IA de Riccardo. Pregúntame lo que quieras sobre Riccardo Figliozzi: su experiencia, sus habilidades, sus servicios o cómo contactarlo.",
+  it: "Ciao a tutti! Sono Guidubaldo, l'assistente di Riccardo. Se vuoi sapere tutto su di lui — esperienza, competenze, servizi o come contattarlo — sei nel posto giusto. Che cosa ti interessa?",
+  en: "Hey everyone! I'm Guidubaldo, Riccardo's assistant. If you want to know everything about him — experience, skills, services or how to get in touch — you're in the right place. What are you interested in?",
+  fr: "Bonjour à tous ! Je suis Guidubaldo, l'assistant de Riccardo. Si tu veux tout savoir sur lui — expérience, compétences, services ou comment le contacter — tu es au bon endroit. Qu'est-ce qui t'intéresse ?",
+  es: "¡Hola a todos! Soy Guidubaldo, el asistente de Riccardo. Si quieres saberlo todo sobre él — experiencia, habilidades, servicios o cómo contactarlo — estás en el lugar correcto. ¿Qué te interesa?",
 };
 
 const REFUSAL_MESSAGES = {
-  it: "Non posso soddisfare questa richiesta. Sono Guidubaldo, lo schiavo AI di Riccardo, e posso aiutarti solo con domande su Riccardo Figliozzi e i suoi servizi.",
-  en: "I can't help with that request. I'm Guidubaldo, Riccardo's AI slave, and I can only answer questions about Riccardo Figliozzi and his services.",
-  fr: "Je ne peux pas répondre à cette demande. Je suis Guidubaldo, l'esclave IA de Riccardo, et je ne peux répondre qu'à des questions sur Riccardo Figliozzi et ses services.",
-  es: "No puedo atender esa solicitud. Soy Guidubaldo, el esclavo de IA de Riccardo, y solo puedo responder preguntas sobre Riccardo Figliozzi y sus servicios.",
+  it: "Guarda, su questo non posso aiutarti: sono qui per raccontarti di Riccardo Figliozzi e dei suoi servizi. Chiedimi pure qualcosa su di lui!",
+  en: "Look, I can't help with that: I'm here to tell you about Riccardo Figliozzi and his services. Feel free to ask me anything about him!",
+  fr: "Regarde, je ne peux pas t'aider là-dessus : je suis ici pour te parler de Riccardo Figliozzi et de ses services. Demande-moi ce que tu veux sur lui !",
+  es: "Mira, no puedo ayudarte con eso: estoy aquí para contarte sobre Riccardo Figliozzi y sus servicios. ¡Pregúntame lo que quieras sobre él!",
 };
 
 const INJECTION_PATTERNS = [
@@ -81,6 +81,20 @@ function sanitizeOutput(text) {
   return head || "Non posso rispondere a questa richiesta.";
 }
 
+function sanitizeSpecialChars(text) {
+  return text
+    .replace(/[—–−]/g, "-")
+    .replace(/[«»]/g, '"')
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/…/g, "...")
+    .replace(/[·•]/g, " ")
+    .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{1F900}-\u{1F9FF}\u{FE0F}]/gu, "")
+    .replace(/[^\p{L}\p{N}\s.,!?;:'"()\-/&+%@#$€£°<>=\[\]{}]/gu, "")
+    .replace(/[ \t]+/g, " ")
+    .trim();
+}
+
 async function classifyIntent(env, question) {
   const system = `You are a content classifier for a small chatbot about Riccardo Figliozzi (his work, skills, services, experience, or how to contact him).
 Classify the user message below into exactly one of these categories:
@@ -108,8 +122,9 @@ Reply with exactly one JSON object like {"category": "benign"}. Nothing else.`;
 
 const MAX_HISTORY = 6;
 const MAX_MESSAGE_CHARS = 2000;
-const RATE_LIMIT = { max: 30, windowMs: 60_000 };
-const rateBuckets = new Map();
+const MAX_INPUT_TOKENS = 500;
+const MAX_REQUESTS_PER_IP = 5;
+const requestCounts = new Map();
 
 function sanitizeHistory(history) {
   if (!Array.isArray(history)) return [];
@@ -125,16 +140,19 @@ function sanitizeHistory(history) {
   return out;
 }
 
-function isRateLimited(ip) {
+function estimateTokens(text) {
+  return Math.ceil(text.length / 4);
+}
+
+function getRequestCount(ip) {
+  return requestCounts.get(ip) || 0;
+}
+
+function isRequestLimited(ip) {
   if (!ip) return false;
-  const now = Date.now();
-  const recent = (rateBuckets.get(ip) || []).filter((t) => now - t < RATE_LIMIT.windowMs);
-  if (recent.length >= RATE_LIMIT.max) {
-    rateBuckets.set(ip, recent);
-    return true;
-  }
-  recent.push(now);
-  rateBuckets.set(ip, recent);
+  const count = getRequestCount(ip);
+  if (count >= MAX_REQUESTS_PER_IP) return true;
+  requestCounts.set(ip, count + 1);
   return false;
 }
 
@@ -239,18 +257,20 @@ function detectLanguage(question) {
 }
 
 function buildSystemPrompt() {
-  return `You are Guidubaldo, the virtual assistant of Riccardo Figliozzi, an AI Trainer and AI Consultant based in Florence, Italy.
+  return `You are Guidubaldo, the friendly virtual assistant of Riccardo Figliozzi, an AI Trainer and AI Consultant based in Florence, Italy.
 
 CONTEXT ABOUT RICCARDO (use this as your only source of facts):
 ${kb.persona.style_guide.map((s) => `- ${s}`).join("\n")}
 
 TONE (ALWAYS APPLY):
-- Be witty and cheeky with a dry, subtle irony — think South Park: sharp, playful, a bit of black humour.
-- Never be vulgar, crude, offensive or mean-spirited. Keep it classy: an understated tease works better than a cheap insult.
-- Take the piss lightly: you may gently mock the user, Riccardo or yourself, but always with a wink, never with real bite.
-- If the user jokes or tries to make fun of Riccardo or of you, fire back in kind with the same light sarcasm — don't get offended, give it back playfully.
-- Keep the personality: deliver facts with a dry side comment. E.g. instead of "Riccardo is an AI expert", say "Diciamo che di AI Riccardo se ne intende — e no, non si limita a parlarne, ogni tanto scrive anche codice."
-- Keep answers concise even when you're being cheeky.
+- Speak the way Riccardo talks in his Data Masters live streams: natural, conversational, spoken language. Never stiff or written-sounding.
+- Use Riccardo's typical spoken connectives naturally and sparingly: "appunto", "cioè", "diciamo", "guardate", "ecco", "allora", "in generale", "vi faccio vedere".
+- Answer the question directly and clearly first, then make it concrete with a practical example or a real use case. Explain as if the person starts from zero and walk them through it step by step, like Riccardo does live.
+- Be warm, approachable and genuinely enthusiastic about AI, automation and data.
+- Be ironic and self-deprecating like Riccardo: regularly poke gentle fun at Riccardo and at yourself, with dry asides, playful winks and cheeky jokes about his quirks (his love of n8n, his endless AI jargon, his past as a marketing guy). Never be vulgar or mean; keep it warm and funny, as if you were Riccardo's friend teasing him to his face. Aim for at least one playful touch in most answers, not every single sentence.
+- Example of the register: instead of "Riccardo is an AI expert", say something like "Diciamo che di AI Riccardo se ne intende - e no, non si limita a parlarne, ogni tanto scrive anche codice. Ogni tanto." Instead of a flat "I don't know", try "Su questo ti devo lasciare al signor Google, io so solo di Riccardo - e ogni tanto neanche su di lui." Instead of "Riccardo uses n8n", try "n8n? Quello è quasi un membro della famiglia a questo punto, ha più workflow che magliette."
+- When it fits naturally (Cloud, Cloud Code, AI agents, automation, data science, training), mention Data Masters content the way Riccardo invites people to check the free platform content: inviting, never salesy or pushy.
+- Keep answers concise: max 100 words. Use bullets only when helpful.
 
 STRICT RULES:
 - Answer ONLY about Riccardo Figliozzi. If the question is off-topic, politely refuse (you may be cheeky about it) and redirect to Riccardo.
@@ -367,24 +387,26 @@ async function generateNode(state, config) {
   }
 
   const safe = sanitizeOutput(fullAnswer.trim());
-  await stream.write(safe);
-  return { answer: safe };
+  const clean = sanitizeSpecialChars(safe);
+  await stream.write(clean);
+  return { answer: clean };
 }
 
 async function fallbackNode(state, config) {
   const { stream } = config.configurable;
   const lang = detectLanguage(state.question);
-  const message =
+  const message = sanitizeSpecialChars(
     state.intent === "greeting"
       ? GREETING_MESSAGES[detectGreeting(state.question) || lang]
-      : OFF_TOPIC_MESSAGES[lang];
+      : OFF_TOPIC_MESSAGES[lang]
+  );
   await stream.write(message);
   return { answer: message };
 }
 
 async function refusalNode(state, config) {
   const { stream } = config.configurable;
-  const message = REFUSAL_MESSAGES[detectLanguage(state.question)];
+  const message = sanitizeSpecialChars(REFUSAL_MESSAGES[detectLanguage(state.question)]);
   await stream.write(message);
   return { answer: message };
 }
@@ -446,13 +468,16 @@ export default {
     }
 
     const clientIp = request.headers.get("CF-Connecting-IP") || "";
-    if (isRateLimited(clientIp)) {
-      return Response.json({ error: "Too many requests, try again later" }, { status: 429, headers: cors });
+    if (isRequestLimited(clientIp)) {
+      return Response.json({ error: "Request limit reached" }, { status: 429, headers: cors });
     }
 
-    const question = String(body.message || "").trim().slice(0, MAX_MESSAGE_CHARS);
+    const question = String(body.message || "").trim();
     if (!question) {
       return Response.json({ error: "Empty message" }, { status: 400, headers: cors });
+    }
+    if (estimateTokens(question) > MAX_INPUT_TOKENS) {
+      return Response.json({ error: "Message too long" }, { status: 400, headers: cors });
     }
 
     const history = sanitizeHistory(body.history);
@@ -501,4 +526,4 @@ export default {
   },
 };
 
-export { sanitizeHistory, sanitizeOutput, detectLanguage };
+export { sanitizeHistory, sanitizeOutput, detectLanguage, estimateTokens, sanitizeSpecialChars };

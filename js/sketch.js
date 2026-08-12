@@ -30,7 +30,7 @@ function windowResized() {
 function draw() {
 
   fill(0);
-  stroke('#FEBB46ff');
+  stroke('#e48b58');
   strokeWeight(2)
 
   if (mouseIsPressed == true) {
@@ -46,7 +46,7 @@ function touchStarted() {
 function touchMoved() {
   if (touches.length > 0) {
     fill(0);
-    stroke('#FEBB46ff');
+    stroke('#e48b58');
     strokeWeight(2);
     circle(touches[0].x, touches[0].y, 40);
   }

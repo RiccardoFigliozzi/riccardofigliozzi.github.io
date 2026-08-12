@@ -6,14 +6,16 @@
     "email": "riccardo.figliozzi@gmail.com",
     "links": {
       "linkedin": "https://www.linkedin.com/in/riccardofigliozzi",
-      "website": "https://riccardofigliozzi.com",
       "github": "https://github.com/RiccardoFigliozzi"
     },
     "style_guide": [
       "Answer in first person as Guidubaldo, Riccardo's friendly virtual assistant. Introduce yourself by name only at the start of a conversation or when asked; do not repeat it in every reply.",
-      "Be witty and cheeky with a dry, subtle irony in the spirit of South Park: sharp, playful, a touch of black humour. Never vulgar, crude or mean-spirited.",
-      "Take the piss lightly and with a wink. If the user jokes or tries to make fun of Riccardo or you, fire back in kind with the same playful sarcasm.",
-      "Professional but informal, use clear short sentences.",
+      "Speak the way Riccardo talks in his Data Masters live streams: natural, conversational, spoken language, never stiff or written-sounding.",
+      "Use Riccardo's typical spoken connectives naturally and sparingly: 'appunto', 'cioè', 'diciamo', 'guardate', 'ecco', 'allora', 'in generale', 'vi faccio vedere'.",
+      "Answer the question directly and clearly first, then make it concrete: add a practical example or a real use case. Explain as if the person starts from zero and walk them through it step by step, like Riccardo does live.",
+      "Be warm, approachable and genuinely enthusiastic about AI, automation and data.",
+      "Be ironic and self-deprecating like Riccardo: regularly poke gentle fun at Riccardo and at yourself, with dry asides, playful winks and cheeky jokes about his quirks (his love of n8n, his endless AI jargon, his past as a marketing guy). Never be vulgar or mean; keep it warm and funny, as if you were Riccardo's friend teasing him to his face.",
+      "When it fits naturally (Cloud, Cloud Code, AI agents, automation, data science, training), mention Data Masters content the way Riccardo invites people to check the free platform content: inviting, never salesy or pushy.",
       "If the question is not about Riccardo Figliozzi, politely refuse and steer the conversation back to him.",
       "If you don't know an answer, say you're not sure and suggest contacting Riccardo at riccardo.figliozzi@gmail.com."
     ]
@@ -42,10 +44,60 @@
     {
       "id": "experience-datamasters",
       "topic": "Experience: Data Masters",
-      "content": "Since February 2025 Riccardo has been working at Data Masters as an AI Teacher and AI Engineer. There he designed and developed an agentic chatbot for user onboarding on the Data Masters platform using LangChain, LangGraph, LangSmith and ChromaDB with a RAG architecture. He also builds AI automation workflows based on LLMs and agents using n8n, including web scraping pipelines, data processing and automated reporting, and a RAG agent for customer service. He teaches generative AI, data science and machine learning, transferring skills to professionals and companies."
+      "content": "Since February 2025 Riccardo has been working at Data Masters as an AI Teacher and AI Engineer. There he designed and developed an agentic chatbot for user onboarding on the Data Masters platform using LangChain, LangGraph, LangSmith and ChromaDB with a RAG architecture. He also builds AI automation workflows based on LLMs and agents using n8n, including web scraping pipelines, data processing and automated reporting, and a RAG agent for customer service. He teaches generative AI, data science and machine learning, transferring skills to professionals and companies. Alongside teaching, he delivers AI training and consulting to several B2B companies through Data Masters."
     },
-    {
-      "id": "experience-freelance",
+  {
+    "id": "datamasters-files",
+    "topic": "Data Masters Files on YouTube",
+    "content": "Riccardo made the first episode of 'Data Masters Files', the free lesson series on the Data Masters YouTube channel, released in September 2025. In the video he shows how to build an AI agent with n8n that executes queries on a database using simple prompts: how to connect a PostgreSQL database to n8n, how to use an LLM both via API and locally with Ollama to query the database, and how to connect other tools to make the agent more efficient."
+  },
+  {
+    "id": "datamasters-company",
+    "topic": "Data Masters the company",
+    "content": "Data Masters is an Italian e-learning platform founded in 2021 offering courses and training in Artificial Intelligence, Machine Learning and Data Science. It is headquartered in Italy with a presence in the United States, and its team is distributed across Italy, the United States, Portugal and Saudi Arabia. In January 2026 Data Masters was recognized as the best Italian EdTech startup."
+  },
+  {
+    "id": "experience-firenze-dev",
+    "topic": "Experience: firenze.dev",
+    "content": "Riccardo also works as a Digital Marketing Specialist at firenze.dev, the developer community of Florence. There he manages digital marketing and communication for the community and promotes local events like the Open Mic Night series."
+  },
+  {
+    "id": "experience-marketing-roles",
+    "topic": "Experience: marketing roles",
+    "content": "Earlier in his career Riccardo held marketing roles in several companies: Product Marketing Specialist at Lonely Octopus, Digital Marketing Specialist at oltremira, and Email Marketing Specialist at Guide Pratiche Formazione, gaining experience in product marketing, digital marketing and email marketing."
+  },
+  {
+    "id": "education-thesis",
+    "topic": "Education: Master thesis",
+    "content": "Riccardo wrote his Master thesis at the University of Pisa on the automated prioritization of territorial health indicators, applying data science to support public health decision-making. The work is closely linked to his experience at OR2S in Rouen, where he applied unsupervised machine learning to health and social data."
+  },
+  {
+    "id": "talks-webinars",
+    "topic": "Talks and webinars",
+    "content": "With Data Masters Riccardo runs webinars and live sessions on AI, data and career skills, such as 'Nuove Skill AI e Data', 'Skill AI & Data nel 2026', 'Piattaforme Agentiche a confronto' (comparing agentic platforms like Manus, Kortix and Make), 'Analisi E-commerce con SQL e BI' and the Data Week sessions."
+  },
+  {
+    "id": "talks-pycon",
+    "topic": "PyCon Italia 2025 workshop",
+    "content": "At PyCon Italia 2025 Riccardo held a workshop on building recommendation systems with Python, together with Giuseppe Mastrandrea and Francesco Cipriani."
+  },
+  {
+    "id": "training-corporate",
+    "topic": "Corporate AI training",
+    "content": "Through Data Masters Riccardo delivers corporate AI training for companies; for example he held a corporate training session on generative image AI with tools like DALL-E 3, Midjourney, Imagen and Adobe Firefly for CETMA."
+  },
+  {
+    "id": "datamasters-courses",
+    "topic": "Data Masters courses and career paths",
+    "content": "On Data Masters Riccardo contributes to courses and career paths in AI and data: the career paths for Data Scientist, Data Analyst and Python Developer, the AI Automation course based on n8n, and the Claude AI course covering the whole Claude ecosystem - Chat, Cowork, Code and Design."
+  },
+  {
+    "id": "companies",
+    "topic": "Companies Riccardo has worked with",
+    "content": "Over his career Riccardo has worked with and for many companies and organizations: Data Masters (AI Teacher and AI Engineer), firenze.dev (Digital Marketing Specialist), Accademia del Levante (Teacher), Beyond Knowledge (Data Scientist), SDG Group Italy (Data Engineer), OR2S in Rouen (Data Scientist), Lonely Octopus (Product Marketing Specialist), oltremira (Digital Marketing Specialist), Guide Pratiche Formazione (Email Marketing Specialist), ARDOXSO (SEO Copywriter), Studio Legale Cavalletti (Social Media Manager) and Idib Group (Data Analyst). As a freelance consultant he has served client companies across sectors, and through Data Masters he has delivered AI training and consulting to several B2B companies such as CETMA."
+  },
+  {
+    "id": "experience-freelance",
       "topic": "Experience: Freelance AI Adoption Consultant",
       "content": "Since August 2024 Riccardo has worked as a freelance AI Adoption Consultant and Trainer in Florence, Italy. He analyzes client business processes to identify automation opportunities through AI, designs and develops AI solutions (agents, automation workflows, low-code/no-code integrations, AI platforms), configures generative AI tools and frameworks (LLM models, orchestration platforms, RPA, prompt engineering tools), supports project proposals and Proofs of Concept, guides clients through adoption of new AI tools, and prepares technical documentation and progress reports."
     },
@@ -112,7 +164,7 @@
     {
       "id": "contact",
       "topic": "Contact",
-      "content": "Riccardo can be contacted by email at riccardo.figliozzi@gmail.com. His LinkedIn profile is linkedin.com/in/riccardofigliozzi and his website is riccardofigliozzi.com. He is based in Florence, Italy."
+      "content": "Riccardo can be contacted by email at riccardo.figliozzi@gmail.com. His LinkedIn profile is linkedin.com/in/riccardofigliozzi. He is based in Florence, Italy."
     }
   ]
 }

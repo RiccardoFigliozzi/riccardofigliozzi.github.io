@@ -6,11 +6,12 @@
     }
 
     const HISTORY_LIMIT = 8;
-    const GREETING = "Ciao! Sono Guidubaldo, lo schiavo AI di Riccardo. Chiedimi tutto su Riccardo Figliozzi, il suo lavoro, le sue competenze o come contattarlo.";
+    const MAX_INPUT_CHARS = 2000;
+    const GREETING = "Ciao a tutti! Sono Guidubaldo, l'assistente di Riccardo. Chiedimi tutto su Riccardo Figliozzi, il suo lavoro, le sue competenze o come contattarlo.";
     const SUGGESTIONS = [
-        "Quali servizi offri?",
-        "Parlami delle tue competenze AI",
-        "Come posso contattarti?",
+        "Quali servizi offre Riccardo?",
+        "Quali sono le competenze AI di Riccardo?",
+        "Come posso contattare Riccardo?",
     ];
 
     let history = [];
@@ -111,6 +112,12 @@
         event.preventDefault();
         const text = input.value.trim();
         if (!text || isStreaming) return;
+        if (text.length > MAX_INPUT_CHARS) {
+            input.value = "";
+            suggestionsEl.hidden = true;
+            addMessage("bot", "Il messaggio è troppo lungo: massimo " + MAX_INPUT_CHARS + " caratteri.");
+            return;
+        }
         input.value = "";
         suggestionsEl.hidden = true;
         send(text);
@@ -203,7 +210,11 @@
             if (!answer) throw new Error("Empty response from server.");
         } catch (err) {
             typing.remove();
-            addMessage("bot", "Ops, qualcosa è andato storto. Riprova più tardi.");
+            const friendly = {
+                "Request limit reached": "Hai esaurito le 5 richieste disponibili. Ricarica la pagina o riprova più tardi.",
+                "Message too long": "Il messaggio è troppo lungo: massimo 2000 caratteri.",
+            }[err.message];
+            addMessage("bot", friendly || "Ops, qualcosa è andato storto. Riprova più tardi.");
             console.error("Chat error:", err);
         } finally {
             history.push({ role: "assistant", content: answer || "" });
