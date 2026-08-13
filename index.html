@@ -203,7 +203,7 @@
 
         function handleTouchMove(event) {
             emptyElement.style.flexBasis = event.touches[0].clientX + 'px';
-            titleElement.style.flexBasis = (event.touches[0].clientY * 0.5) + 'px';
+            titleElement.style.flexBasis = (event.touches[0].clientY * 0.35) + 'px';
 
             figureElements.forEach(function (element) {
                 element.style.flexBasis = (window.innerWidth - event.touches[0].clientX) + 'px';
