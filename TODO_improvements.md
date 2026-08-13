@@ -5,7 +5,7 @@
 - [x] **Ottimizzare il `head` di `index.html`**: aggiungere meta description, meta author, Open Graph e structured data JSON-LD (schema.org `Person`).
 - [x] **Creare `sitemap.xml`** nella root con `https://riccardofigliozzi.github.io/`.
 - [x] **Creare `robots.txt`** nella root con `Allow: /` e riferimento alla sitemap.
-- [ ] **Pushare le modifiche** (`git add index.html sitemap.xml robots.txt && git commit -m "Add SEO meta, sitemap and robots" && git push origin main`).
+- [x] **Pushare le modifiche** (`git add index.html sitemap.xml robots.txt && git commit -m "Add SEO meta, sitemap and robots" && git push origin main`).
 - [ ] **Registrare il sito su Google Search Console**: proprietà tipo "Prefisso URL", verificare con meta tag.
 - [ ] **Inviare la sitemap e richiedere l'indicizzazione** della homepage.
 - [ ] **Costruire autorevolezza**: link dal profilo LinkedIn e GitHub, menzione del nome completo nel sito, aggiornamenti regolari.
