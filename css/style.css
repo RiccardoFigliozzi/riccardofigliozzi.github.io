@@ -96,6 +96,8 @@ nav {
     backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 nav ul {
@@ -968,11 +970,20 @@ nav.hidden {
     }
 
     nav ul li {
-        margin-left: 25px;
+        margin-left: 15px;
+    }
+
+    .nav-logo {
+        margin-left: 20px;
+        margin-right: 10px;
+    }
+
+    .nav-left {
+        margin-left: 10px;
     }
 
     .nav-right {
-        margin-right: 25px;
+        margin-right: 20px;
     }
 
     .nav-social {
