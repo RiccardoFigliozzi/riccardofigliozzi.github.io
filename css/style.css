@@ -971,6 +971,24 @@ nav.hidden {
         margin-left: 25px;
     }
 
+    .nav-right {
+        margin-right: 25px;
+    }
+
+    .nav-social {
+        gap: 6px;
+    }
+
+    .nav-social a {
+        width: 30px;
+        height: 30px;
+    }
+
+    .nav-social svg {
+        width: 16px;
+        height: 16px;
+    }
+
     section {
         min-height: 100vh;
     }
