@@ -231,6 +231,29 @@ section.about article .description {
     color: #000000;
 }
 
+.social-links {
+    display: flex;
+    gap: 16px;
+    padding: 0 6.25vw 2.125vw;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.social-links a:hover {
+    background: var(--purple);
+    transform: translateY(-3px);
+}
+
 /* service section */
 
 section.service article {
