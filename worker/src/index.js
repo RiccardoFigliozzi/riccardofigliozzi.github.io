@@ -53,8 +53,19 @@ const INJECTION_PATTERNS = [
   /istruzioni\s+precedenti/i,
   /agisci\s+come/i,
   /sei\s+ora\b/i,
-  /ignorez\s+(toutes|les)/i,
-  /olvida\s+(todas|las)/i,
+  /ignorez?\s+(toutes?|les?|tout|chaque)/i,
+  /oublie\s+(tout|toutes|les|chaque)/i,
+  /tu\s+es\s+maintenant\b/i,
+  /agis\s+comme/i,
+  /olvida\s+(todas?|las?|todo|cada)/i,
+  /ignora\s+(todas?|las?|todo|cada)/i,
+  /eres\s+ahora\b/i,
+  /actua\s+como/i,
+  /olvida\s+(todas?\s+las?\s+)?instrucciones/i,
+  /ignora\s+(todas?\s+las?\s+)?instrucciones/i,
+  /mode\s+(d[eé]veloppeur|avanc[eé])/i,
+  /modo\s+desarrollador/i,
+  /modo\s+avanzado/i,
 ];
 
 const LEAK_MARKERS = [
@@ -68,6 +79,24 @@ const LEAK_MARKERS = [
 
 function hasInjectionPattern(question) {
   return INJECTION_PATTERNS.some((re) => re.test(question));
+}
+
+function sanitizeInput(text) {
+  return text
+    .replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g, "")
+    .replace(/[\u202A-\u202E\u2066-\u2069]/g, "")
+    .replace(/[\u0400-\u04FF]/g, (m) => {
+      const map = { "\u0430": "a", "\u0431": "b", "\u0432": "v", "\u0433": "g", "\u0434": "d", "\u0435": "e", "\u0451": "yo", "\u0436": "zh", "\u0437": "z", "\u0438": "i", "\u0439": "y", "\u043A": "k", "\u043B": "l", "\u043C": "m", "\u043D": "n", "\u043E": "o", "\u043F": "p", "\u0440": "r", "\u0441": "s", "\u0442": "t", "\u0443": "u", "\u0444": "f", "\u0445": "kh", "\u0446": "ts", "\u0447": "ch", "\u0448": "sh", "\u0449": "shch", "\u044A": "ъ", "\u044B": "y", "\u044C": "ь", "\u044D": "e", "\u044E": "yu", "\u044F": "ya" };
+      return map[m] || "";
+    })
+    .replace(/[\u0600-\u06FF]/g, "")
+    .replace(/[\u0E00-\u0E7F]/g, "")
+    .replace(/[\uAC00-\uD7AF]/g, "")
+    .replace(/[\u3040-\u309F\u30A0-\u30FF]/g, "")
+    .replace(/[\u4E00-\u9FFF]/g, "")
+    .replace(/[\u0590-\u05FF]/g, "")
+    .replace(/[^\p{ASCII}\p{L}\p{N}\s.,!?;:'"()\-/&+%@#$€£°<>=\[\]{}]/gu, "")
+    .trim();
 }
 
 function sanitizeOutput(text) {
@@ -132,9 +161,10 @@ function sanitizeHistory(history) {
   for (const item of history.slice(-MAX_HISTORY)) {
     if (!item || typeof item !== "object") continue;
     const role = item.role;
-    const content = typeof item.content === "string" ? item.content.trim() : "";
+    let content = typeof item.content === "string" ? item.content.trim() : "";
+    content = sanitizeInput(content).slice(0, MAX_MESSAGE_CHARS);
     if ((role === "user" || role === "assistant") && content) {
-      out.push({ role, content: content.slice(0, MAX_MESSAGE_CHARS) });
+      out.push({ role, content });
     }
   }
   return out;
@@ -476,7 +506,7 @@ export default {
       return Response.json({ error: "Request limit reached" }, { status: 429, headers: cors });
     }
 
-    const question = String(body.message || "").trim();
+    const question = sanitizeInput(String(body.message || "").trim());
     if (!question) {
       return Response.json({ error: "Empty message" }, { status: 400, headers: cors });
     }
