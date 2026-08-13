@@ -937,7 +937,7 @@ nav.hidden {
     .chat-window {
         bottom: 96px;
         right: 12px;
-        width: calc(100vw - 24px);
+        width: calc(100vw - 48px);
         max-width: none;
         height: 60vh;
         max-height: none;
