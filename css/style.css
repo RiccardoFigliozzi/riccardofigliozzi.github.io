@@ -939,7 +939,7 @@ nav.hidden {
         right: 12px;
         width: calc(100vw - 24px);
         max-width: none;
-        height: calc(100vh - 130px);
+        height: 60vh;
         max-height: none;
         border-radius: 24px;
     }
