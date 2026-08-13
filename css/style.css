@@ -96,8 +96,6 @@ nav {
     backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
-    overflow-x: auto;
-    overflow-y: hidden;
 }
 
 nav ul {
@@ -970,34 +968,47 @@ nav.hidden {
     }
 
     nav ul li {
-        margin-left: 15px;
+        margin-left: 12px;
     }
 
     .nav-logo {
-        margin-left: 20px;
-        margin-right: 10px;
+        margin-left: 16px;
+        margin-right: 8px;
+    }
+
+    .nav-logo img {
+        height: 36px;
     }
 
     .nav-left {
-        margin-left: 10px;
+        margin-left: 4px;
+    }
+
+    .nav-left li a {
+        font-size: 14px;
     }
 
     .nav-right {
-        margin-right: 20px;
+        margin-right: 16px;
     }
 
     .nav-social {
-        gap: 6px;
+        gap: 4px;
     }
 
     .nav-social a {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
 
     .nav-social svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
+    }
+
+    .lang-toggle {
+        font-size: 11px;
+        padding: 3px 7px;
     }
 
     section {
