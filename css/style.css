@@ -231,27 +231,27 @@ section.about article .description {
     color: #000000;
 }
 
-.social-links {
+.nav-social {
     display: flex;
-    gap: 16px;
-    padding: 0 6.25vw 2.125vw;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
 }
 
-.social-links a {
+.nav-social a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
     color: #ffffff;
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.social-links a:hover {
-    background: var(--purple);
-    transform: translateY(-3px);
+.nav-social a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
 /* service section */
