@@ -182,9 +182,30 @@
         }[c]));
     }
 
-    function linkifyUrls(text) {
-        const urlRegex = /(https?:\/\/[^\s<]+)/g;
-        return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+    function processBotText(text) {
+        const PLACEHOLDER = "\x00URL";
+        let counter = 0;
+        const urlMap = {};
+        
+        const urlRegex = /https?:\/\/[^\s<")\]]+/g;
+        const withPlaceholders = text.replace(urlRegex, (url) => {
+            const cleanUrl = url.replace(/[.,;:!?)]+$/, "");
+            const trail = url.slice(cleanUrl.length);
+            const key = PLACEHOLDER + counter + "\x00";
+            urlMap[key] = { url: cleanUrl, trail };
+            counter++;
+            return key;
+        });
+        
+        let escaped = escapeHtml(withPlaceholders);
+        
+        for (const [key, { url, trail }] of Object.entries(urlMap)) {
+            const escapedKey = escapeHtml(key);
+            const replacement = `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>${trail}`;
+            escaped = escaped.replace(escapedKey, replacement);
+        }
+        
+        return escaped;
     }
 
     async function send(text) {
@@ -232,7 +253,7 @@
                                 bubble = addMessage("bot", "");
                             }
                             answer += payload.token;
-                            bubble.innerHTML = linkifyUrls(escapeHtml(answer));
+                            bubble.innerHTML = processBotText(answer);
                             scrollToBottom();
                         }
                     }
