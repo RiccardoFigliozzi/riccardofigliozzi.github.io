@@ -182,6 +182,11 @@
         }[c]));
     }
 
+    function linkifyUrls(text) {
+        const urlRegex = /(https?:\/\/[^\s<]+)/g;
+        return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+    }
+
     async function send(text) {
         addMessage("user", text);
         history.push({ role: "user", content: text });
@@ -227,7 +232,7 @@
                                 bubble = addMessage("bot", "");
                             }
                             answer += payload.token;
-                            bubble.innerHTML = escapeHtml(answer);
+                            bubble.innerHTML = linkifyUrls(escapeHtml(answer));
                             scrollToBottom();
                         }
                     }
