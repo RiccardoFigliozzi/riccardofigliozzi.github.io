@@ -183,13 +183,8 @@
     }
 
     function linkifyUrls(text) {
-        // Convert markdown links [text](url) to HTML links
-        const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-        let result = text.replace(markdownLinkRegex, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-        // Also convert bare URLs
         const urlRegex = /(https?:\/\/[^\s<]+)/g;
-        result = result.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-        return result;
+        return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
     }
 
     async function send(text) {
