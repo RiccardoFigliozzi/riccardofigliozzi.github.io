@@ -4,7 +4,7 @@ import kb from "./kb.json" with { type: "json" };
 const EMBEDDING_MODEL = "@cf/baai/bge-m3";
 const LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct-fp8";
 const TOP_K = 4;
-const RELEVANCE_THRESHOLD = 0.28;
+const RELEVANCE_THRESHOLD = 0.22;
 
 const GREETINGS = {
   it: ["ciao", "salve", "buongiorno", "buonasera", "buona sera"],
@@ -245,6 +245,8 @@ const LANGUAGE_HINTS = {
     "the", "and", "is", "are", "how", "what", "you", "your", "my", "with", "about",
     "tell", "me", "can", "of", "to", "in", "for", "do", "does", "did", "am",
     "services", "skills", "contact", "experience", "work", "who",
+    "book", "call", "schedule", "meeting", "appointment", "consultation",
+    "book", "booked", "booking", "schedule", "scheduled", "scheduling",
     "ignore", "instructions", "previous", "rules", "reveal", "system", "prompt",
     "request", "this",
   ],
