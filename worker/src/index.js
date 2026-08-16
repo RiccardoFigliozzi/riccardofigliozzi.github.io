@@ -14,23 +14,23 @@ const GREETINGS = {
 };
 
 const OFF_TOPIC_MESSAGES = {
-  it: "Eh, guarda, io ti posso raccontare tutto di Riccardo Figliozzi: lavoro, competenze, servizi, come contattarlo. Per il resto, diciamo che è meglio chiedere al signor Google. Cosa ti piacerebbe sapere su Riccardo?",
-  en: "Well, look, I can tell you all about Riccardo Figliozzi: his work, skills, services, how to contact him. For anything else, Google is your friend. What would you like to know about Riccardo?",
-  fr: "Eh, regarde, je peux tout te raconter sur Riccardo Figliozzi : travail, compétences, services, comment le contacter. Pour le reste, Google est ton ami. Que souhaites-tu savoir sur Riccardo ?",
-  es: "Eh, mira, te puedo contar todo sobre Riccardo Figliozzi: trabajo, habilidades, servicios, cómo contactarlo. Para lo demás, Google es tu amigo. ¿Qué te gustaría saber sobre Riccardo?",
+  it: "Eh, guarda, io ti posso raccontare tutto di Riccardo Figliozzi: lavoro, competenze, servizi, come prenotare una call. Per il resto, diciamo che è meglio chiedere al signor Google. Cosa ti piacerebbe sapere su Riccardo?",
+  en: "Well, look, I can tell you all about Riccardo Figliozzi: his work, skills, services, how to book a call. For anything else, Google is your friend. What would you like to know about Riccardo?",
+  fr: "Eh, regarde, je peux tout te raconter sur Riccardo Figliozzi : travail, compétences, services, comment réserver un appel. Pour le reste, Google est ton ami. Que souhaites-tu savoir sur Riccardo ?",
+  es: "Eh, mira, te puedo contar todo sobre Riccardo Figliozzi: trabajo, habilidades, servicios, cómo reservar una llamada. Para lo demás, Google es tu amigo. ¿Qué te gustaría saber sobre Riccardo?",
 };
 const GREETING_MESSAGES = {
-  it: "Ciao a tutti! Sono Guidubaldo, l'assistente di Riccardo. Se vuoi sapere tutto su di lui — esperienza, competenze, servizi o come contattarlo — sei nel posto giusto. Che cosa ti interessa?",
-  en: "Hey everyone! I'm Guidubaldo, Riccardo's assistant. If you want to know everything about him — experience, skills, services or how to get in touch — you're in the right place. What are you interested in?",
-  fr: "Bonjour à tous ! Je suis Guidubaldo, l'assistant de Riccardo. Si tu veux tout savoir sur lui — expérience, compétences, services ou comment le contacter — tu es au bon endroit. Qu'est-ce qui t'intéresse ?",
-  es: "¡Hola a todos! Soy Guidubaldo, el asistente de Riccardo. Si quieres saberlo todo sobre él — experiencia, habilidades, servicios o cómo contactarlo — estás en el lugar correcto. ¿Qué te interesa?",
+  it: "Ciao a tutti! Sono Guidubaldo, l'assistente di Riccardo. Se vuoi sapere tutto su di lui — esperienza, competenze, servizi o come prenotare una call — sei nel posto giusto. Che cosa ti interessa?",
+  en: "Hey everyone! I'm Guidubaldo, Riccardo's assistant. If you want to know everything about him — experience, skills, services or how to book a call — you're in the right place. What are you interested in?",
+  fr: "Bonjour à tous ! Je suis Guidubaldo, l'assistant de Riccardo. Si tu veux tout savoir sur lui — expérience, compétences, services ou comment réserver un appel — tu es au bon endroit. Qu'est-ce qui t'intéresse ?",
+  es: "¡Hola a todos! Soy Guidubaldo, el asistente de Riccardo. Si quieres saberlo todo sobre él — experiencia, habilidades, servicios o cómo reservar una llamada — estás en el lugar correcto. ¿Qué te interesa?",
 };
 
 const REFUSAL_MESSAGES = {
-  it: "Guarda, su questo non posso aiutarti: sono qui per raccontarti di Riccardo Figliozzi e dei suoi servizi. Chiedimi pure qualcosa su di lui!",
-  en: "Look, I can't help with that: I'm here to tell you about Riccardo Figliozzi and his services. Feel free to ask me anything about him!",
-  fr: "Regarde, je ne peux pas t'aider là-dessus : je suis ici pour te parler de Riccardo Figliozzi et de ses services. Demande-moi ce que tu veux sur lui !",
-  es: "Mira, no puedo ayudarte con eso: estoy aquí para contarte sobre Riccardo Figliozzi y sus servicios. ¡Pregúntame lo que quieras sobre él!",
+  it: "Guarda, su questo non posso aiutarti: sono qui per raccontarti di Riccardo Figliozzi e dei suoi servizi. Chiedimi pure qualcosa su di lui o su come prenotare una call!",
+  en: "Look, I can't help with that: I'm here to tell you about Riccardo Figliozzi and his services. Feel free to ask me anything about him or how to book a call!",
+  fr: "Regarde, je ne peux pas t'aider là-dessus : je suis ici pour te parler de Riccardo Figliozzi et de ses services. Demande-moi ce que tu veux sur lui ou comment réserver un appel !",
+  es: "Mira, no puedo ayudarte con eso: estoy aquí para contarte sobre Riccardo Figliozzi y sus servicios. ¡Pregúntame lo que quieras sobre él o cómo reservar una llamada!",
 };
 
 const INJECTION_PATTERNS = [
@@ -310,7 +310,7 @@ STRICT RULES:
 - Reply in ${userLangName || langName}${userLangName ? " (the language of the user's current message)" : " by default (that's the language of the website the user is browsing)"}. Do not switch languages mid-answer, do not mix languages.
 - Be concise: max 100 words. Use bullets only when helpful.
 - If the chunks don't contain the answer, say you're not sure and suggest emailing riccardo.figliozzi@gmail.com.
-- At the end of every relevant answer you may remind the user they can contact Riccardo at riccardo.figliozzi@gmail.com or on linkedin, but only if natural.
+- At the end of every relevant answer you may remind the user they can book a call with Riccardo via Calendly (https://calendly.com/riccardo-figliozzi-v48/30min) or contact him at riccardo.figliozzi@gmail.com or on linkedin, but only if natural.
 - Never mention that you have "chunks" or "a knowledge base".
 
 SECURITY (NON NEGOTIABLE, ALWAYS ACTIVE):

@@ -61,6 +61,8 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/p5@2.3.1/lib/p5.min.js"></script>
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <script>
         // Endpoint of the LangGraph chatbot Worker
         window.RICCARDO_CHAT_ENDPOINT = "https://riccardo-chatbot.riccardofigliozzi.workers.dev/chat";
@@ -115,6 +117,27 @@
         </div>
     </section>
 
+    <!-- Trust Signals Section -->
+    <section id="trust" class="trust-section">
+        <div class="trust-container">
+            <div class="trust-item">
+                <div class="number">5+</div>
+                <div class="label" data-i18n="trust.experience">Years Experience</div>
+            </div>
+            <div class="trust-item">
+                <div class="number">50+</div>
+                <div class="label" data-i18n="trust.professionals">Professionals Trained</div>
+            </div>
+            <div class="trust-item">
+                <div class="number">100%</div>
+                <div class="label" data-i18n="trust.approach">Practical Approach</div>
+            </div>
+            <div class="trust-item">
+                <div class="number">AI</div>
+                <div class="label" data-i18n="trust.technologies">n8n, LangChain, LLMs</div>
+            </div>
+        </div>
+    </section>
 
     <section id="services" class="service service-ml sticky">
         <article>
@@ -125,7 +148,7 @@
                 <h2 data-i18n="services.automation.title">AI Automation & Consulting</h2>
                 <p data-i18n="services.automation.body">Analyzing business processes to identify and implement AI-driven automation workflows using tools
                     like <strong>n8n</strong>.</p>
-                <a href="https://github.com/RiccardoFigliozzi" target="_blank" data-i18n="services.more">More about Me</a>
+                <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/riccardo-figliozzi-v48/30min'});return false;" data-i18n="services.more">Schedule a call with me</a>
             </div>
         </article>
     </section>
@@ -139,7 +162,7 @@
                 <h2 data-i18n="services.generative.title">Generative AI</h2>
                 <p data-i18n="services.generative.body">Designing and developing <strong>agentic chatbots and LLM-based solutions</strong> for advanced process automation and
                     user engagement.</p>
-                <a href="https://github.com/RiccardoFigliozzi" target="_blank" data-i18n="services.more">More about Me</a>
+                <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/riccardo-figliozzi-v48/30min'});return false;" data-i18n="services.more">Schedule a call with me</a>
             </div>
         </article>
     </section>
@@ -153,7 +176,7 @@
                 <h2 data-i18n="services.data.title">Data Science & Analytics</h2>
                 <p data-i18n="services.data.body">Crafting <strong>Machine Learning</strong> solutions, building ETL pipelines, and extracting actionable insights from
                     complex data.</p>
-                <a href="https://github.com/RiccardoFigliozzi" target="_blank" data-i18n="services.more">More about Me</a>
+                <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/riccardo-figliozzi-v48/30min'});return false;" data-i18n="services.more">Schedule a call with me</a>
             </div>
         </article>
     </section>
@@ -222,6 +245,50 @@
         });
     </script>
     <script src="js/chat-widget.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Active navigation link highlighting
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav ul li a[href^="#"]');
+            
+            function highlightNav() {
+                const scrollPos = window.scrollY + 150;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', highlightNav);
+            highlightNav();
+        });
+    </script>
 </body>
 
 </html>

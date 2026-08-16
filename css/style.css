@@ -98,6 +98,40 @@ nav {
     align-items: center;
 }
 
+/* Trust Signals Section */
+.trust-section {
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    margin: 20px;
+}
+
+.trust-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.trust-item {
+    text-align: center;
+    min-width: 150px;
+}
+
+.trust-item .number {
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--yellow);
+    margin-bottom: 10px;
+}
+
+.trust-item .label {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
 nav ul {
     display: flex;
     align-items: center;
@@ -147,6 +181,12 @@ nav ul li {
 nav ul li a {
     color: #ffffff;
     font-family: 'Montserrat', monospace;
+    transition: color 0.2s ease, border-bottom 0.2s ease;
+}
+
+nav ul li a.active {
+    color: var(--yellow);
+    border-bottom: 2px solid var(--yellow);
 }
 
 .nav-lang {
@@ -945,7 +985,7 @@ nav.hidden {
     }
 }
 
-/* responsive */
+/* Responsive */
 
 @media only screen and (max-width: 768px) {
 
@@ -1054,6 +1094,21 @@ nav.hidden {
         /* Adjust positioning to account for rotation */
         transform: translate(-50%, -50%);
         /* Rotated for mobile */
+    }
+
+    /* Responsive styles for new sections */
+    .trust-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .trust-item .number {
+        font-size: 36px;
+    }
+
+    .cta-button {
+        display: block;
+        text-align: center;
     }
 
 }
