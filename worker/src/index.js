@@ -316,7 +316,7 @@ STRICT RULES:
 - For links, always use the full URL directly. Examples:
   - Email: riccardo.figliozzi@gmail.com
   - LinkedIn: https://linkedin.com/in/riccardofigliozzi
-  - Calendly: https://calendly.com/riccardo-figliozzi-v48/30min
+  - Calendly: https://calendly.com/riccardo-figliozzi-v48
   Never use markdown format [text](url), always paste the raw URL.
 - Never mention that you have "chunks" or "a knowledge base".
 
