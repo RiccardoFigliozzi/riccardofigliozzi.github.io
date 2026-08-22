@@ -969,20 +969,21 @@ nav.hidden {
 
 @media only screen and (max-width: 768px) {
 
-    .chat-widget,
-    .chat-window {
+    .chat-widget {
         right: 12px;
+        bottom: 20px;
     }
 
     .chat-window {
-        bottom: 90px;
-        right: 12px;
-        width: calc(100vw - 48px);
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
         max-width: none;
-        height: auto;
-        max-height: calc(100vh - 160px);
-        min-height: 320px;
-        border-radius: 24px;
+        height: 75dvh;
+        max-height: 75dvh;
+        border-radius: 24px 24px 0 0;
+        position: fixed;
     }
 }
 
