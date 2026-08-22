@@ -975,12 +975,13 @@ nav.hidden {
     }
 
     .chat-window {
-        bottom: 96px;
+        bottom: 90px;
         right: 12px;
         width: calc(100vw - 48px);
         max-width: none;
-        height: 60vh;
-        max-height: none;
+        height: auto;
+        max-height: calc(100vh - 160px);
+        min-height: 320px;
         border-radius: 24px;
     }
 }
