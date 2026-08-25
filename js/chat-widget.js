@@ -34,9 +34,12 @@
         <div class="chat-window" hidden>
             <header class="chat-header">
                 <span class="chat-avatar">G</span>
-                <div>
+                <div style="flex:1; min-width:0;">
                     <strong>Guidubaldo</strong>
-                    <small><span class="chat-status-dot"></span> ${i18n.t("chat.status")}</small>
+                    <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:3px;">
+                        <small class="chat-ai-label" aria-label="${i18n.t("chat.ariaAiLabel")}">${i18n.t("chat.aiLabel")}</small>
+                        <small class="chat-status"><span class="chat-status-dot"></span> ${i18n.t("chat.status")}</small>
+                    </div>
                 </div>
                 <button class="chat-close" type="button" aria-label="${i18n.t("chat.ariaClose")}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
@@ -115,7 +118,9 @@
         const newLang = event.detail;
         window.RICCARDO_CHAT_LANG = newLang;
         input.placeholder = i18n.t("chat.placeholder");
-        const status = root.querySelector(".chat-header small");
+        const aiLabel = root.querySelector(".chat-ai-label");
+        if (aiLabel) { aiLabel.textContent = i18n.t("chat.aiLabel"); aiLabel.setAttribute("aria-label", i18n.t("chat.ariaAiLabel")); }
+        const status = root.querySelector(".chat-status");
         if (status) status.innerHTML = `<span class="chat-status-dot"></span> ${i18n.t("chat.status")}`;
         toggle.setAttribute("aria-label", windowEl.hidden ? i18n.t("chat.ariaOpen") : i18n.t("chat.ariaClose"));
         closeBtn.setAttribute("aria-label", i18n.t("chat.ariaClose"));

@@ -606,7 +606,8 @@ nav.hidden {
     width: 380px;
     max-width: calc(100vw - 48px);
     height: 540px;
-    max-height: calc(100vh - 140px);
+    max-height: calc(100vh - 160px);
+    max-height: calc(100dvh - 160px);
     background: #1f1a1c;
     border-radius: 28px;
     overflow: hidden;
@@ -669,6 +670,32 @@ nav.hidden {
     font-size: 12px;
     opacity: 0.92;
     margin-top: 2px;
+}
+
+.chat-ai-label {
+    font-size: 10px;
+    opacity: 1;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.2;
+    white-space: nowrap;
+    margin-top: 0;
+}
+
+.chat-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    opacity: 0.92;
+    white-space: nowrap;
+    margin-top: 0;
 }
 
 .chat-status-dot {
@@ -971,17 +998,28 @@ nav.hidden {
 
     .chat-widget {
         right: 12px;
+        bottom: max(12px, env(safe-area-inset-bottom, 0px));
     }
 
     .chat-window {
-        bottom: 96px;
+        left: 12px;
         right: 12px;
-        left: auto;
-        width: calc(100vw - 48px);
+        width: auto;
         max-width: none;
-        height: min(520px, calc(100vh - 180px));
-        max-height: none;
+        bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+        top: auto;
+        height: auto;
+        max-height: calc(100vh - 96px);
+        max-height: calc(100dvh - 96px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
         border-radius: 24px;
+    }
+}
+
+@media only screen and (max-height: 500px) {
+    .chat-window {
+        bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+        max-height: calc(100vh - 88px);
+        max-height: calc(100dvh - 88px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
     }
 }
 

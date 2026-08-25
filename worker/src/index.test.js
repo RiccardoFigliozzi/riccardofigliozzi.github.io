@@ -132,7 +132,7 @@ test("relevance routes greeting to fallback greeting message", async () => {
   const mod = await import("./index.js");
   const { default: worker } = mod;
   const text = await collect(worker, env, "Hello!");
-  assert.match(text, /Guidubaldo, Riccardo's assistant/);
+  assert.match(text, /AI assistant created by Riccardo Figliozzi/);
 });
 
 test("Italian greeting gets an Italian reply", async () => {
